@@ -1,0 +1,33 @@
+@model MaharaFinalVersion.Models.LoginViewModel;
+
+@{
+    ViewData["Title"] = "تسجيل الدخول";
+}
+
+<h1 class="mb-4">تسجيل الدخول</h1>
+
+<form asp-action="Login" method="post">
+    <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+    <div class="form-group mb-3">
+        <label asp-for="UserName" class="form-label">اسم المستخدم</label>
+        <input asp-for="UserName" class="form-control" placeholder="أدخل اسم المستخدم" />
+        <span asp-validation-for="UserName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="Password" class="form-label">كلمة المرور</label>
+        <input asp-for="Password" type="password" class="form-control" placeholder="أدخل كلمة المرور" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-2">تسجيل الدخول</button>
+</form>
+
+<p class="mt-3">
+    ليس لديك حساب؟ <a asp-action="Register" asp-controller="Account">أنشئ حساب جديد</a>
+</p>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,199 @@
+﻿@{
+    ViewData["Title"] = "مهارة - منصة مشاركة المهارات";
+}
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="منصة تفاعلية لمشاركة المهارات لطلاب أكاديمية طويق">
+    <title>@ViewData["Title"]</title>
+    <link href="~/css/site.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container navbar-content">
+            <a href="/" class="navbar-brand">
+                <span class="navbar-brand-icon">🎯</span>
+                مهارة
+            </a>
+            <ul class="navbar-nav">
+                <li><a href="/" class="nav-link active">الرئيسية</a></li>
+                <li><a href="/Categories" class="nav-link">التصنيفات</a></li>
+                <li><a href="/Skills" class="nav-link">المهارات</a></li>
+                <li><a href="/Sessions" class="nav-link">الجلسات</a></li>
+                <li><a href="/Achievements" class="nav-link">الإنجازات</a></li>
+            </ul>
+            <a href="/Account/Login" class="btn btn-primary">تسجيل الدخول</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <span class="hero-badge animate-fadeIn">
+                ✨ منصة أكاديمية طويق
+            </span>
+            <h1 class="hero-title animate-fadeIn delay-1">
+                شارك مهاراتك، تعلّم من الآخرين
+            </h1>
+            <p class="hero-subtitle animate-fadeIn delay-2">
+                انضم لمجتمع من المتعلمين والمدربين في بيئة تفاعلية تدعم نموك المهني
+            </p>
+            <div class="hero-actions animate-fadeIn delay-3">
+                <a href="/Sessions" class="btn btn-primary btn-lg">🎯 استكشف الجلسات</a>
+                <a href="/Skills" class="btn btn-outline btn-lg">📚 تصفح المهارات</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value">150+</div>
+                    <div class="stat-label">مهارة متاحة</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">500+</div>
+                    <div class="stat-label">طالب نشط</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">200+</div>
+                    <div class="stat-label">جلسة مكتملة</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">50+</div>
+                    <div class="stat-label">مدرب معتمد</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">لماذا مهارة؟</h2>
+                <p class="section-subtitle">منصة متكاملة لتبادل المعرفة وتطوير المهارات</p>
+            </div>
+            <div class="features-grid">
+                <div class="card animate-fadeIn">
+                    <div class="card-icon">🎓</div>
+                    <h3 class="card-title">جلسات تفاعلية</h3>
+                    <p class="card-description">شارك في جلسات مباشرة مع مدربين معتمدين</p>
+                </div>
+                <div class="card animate-fadeIn delay-1">
+                    <div class="card-icon">🏆</div>
+                    <h3 class="card-title">نظام الإنجازات</h3>
+                    <p class="card-description">اكسب شارات ونقاط مع كل تقدم تحققه</p>
+                </div>
+                <div class="card animate-fadeIn delay-2">
+                    <div class="card-icon">🧬</div>
+                    <h3 class="card-title">حمض المهارات</h3>
+                    <p class="card-description">تصور فريد لمهاراتك في كوكبة نجوم ثلاثية الأبعاد</p>
+                </div>
+                <div class="card animate-fadeIn delay-3">
+                    <div class="card-icon">👥</div>
+                    <h3 class="card-title">مجتمع داعم</h3>
+                    <p class="card-description">تواصل مع زملائك وتعلم من خبراتهم</p>
+                </div>
+                <div class="card animate-fadeIn delay-4">
+                    <div class="card-icon">📊</div>
+                    <h3 class="card-title">تتبع التقدم</h3>
+                    <p class="card-description">لوحة تحكم شاملة لمتابعة تطورك</p>
+                </div>
+                <div class="card animate-fadeIn">
+                    <div class="card-icon">🚀</div>
+                    <h3 class="card-title">ترقية للمدرب</h3>
+                    <p class="card-description">طور مهاراتك وانضم لفريق المدربين</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Links Section -->
+    <section class="sessions">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">استكشف المنصة</h2>
+                <p class="section-subtitle">ابدأ رحلتك التعليمية الآن</p>
+            </div>
+            <div class="features-grid">
+                <a href="/Categories" class="card">
+                    <div class="card-icon">📂</div>
+                    <h3 class="card-title">التصنيفات</h3>
+                    <p class="card-description">تصفح فئات المهارات المختلفة (تقنية، إبداعية، شخصية)</p>
+                </a>
+                <a href="/Sessions" class="card">
+                    <div class="card-icon">🎯</div>
+                    <h3 class="card-title">الجلسات</h3>
+                    <p class="card-description">انضم لجلسات تعليمية مباشرة مع المدربين</p>
+                </a>
+                <a href="/Skills" class="card">
+                    <div class="card-icon">💡</div>
+                    <h3 class="card-title">المهارات</h3>
+                    <p class="card-description">اكتشف مهارات جديدة وطور قدراتك</p>
+                </a>
+                <a href="/Achievements" class="card">
+                    <div class="card-icon">🏆</div>
+                    <h3 class="card-title">الإنجازات</h3>
+                    <p class="card-description">تعرف على الشارات والمكافآت المتاحة</p>
+                </a>
+                <a href="/PromotionRequests" class="card">
+                    <div class="card-icon">⬆️</div>
+                    <h3 class="card-title">طلبات الترقية</h3>
+                    <p class="card-description">تقدم لتصبح مدرباً معتمداً</p>
+                </a>
+                <a href="/Points" class="card">
+                    <div class="card-icon">⭐</div>
+                    <h3 class="card-title">النقاط</h3>
+                    <p class="card-description">تابع رصيدك من نقاط المهارة</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <div class="footer-brand">🎯 مهارة</div>
+                    <p class="footer-description">منصة تفاعلية لمشاركة المهارات لطلاب أكاديمية طويق</p>
+                </div>
+                <div>
+                    <h4 class="footer-title">روابط سريعة</h4>
+                    <ul class="footer-links">
+                        <li><a href="/Categories">التصنيفات</a></li>
+                        <li><a href="/Skills">المهارات</a></li>
+                        <li><a href="/Sessions">الجلسات</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">الحساب</h4>
+                    <ul class="footer-links">
+                        <li><a href="/Account/Login">تسجيل الدخول</a></li>
+                        <li><a href="/Achievements">الإنجازات</a></li>
+                        <li><a href="/Points">النقاط</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">الإدارة</h4>
+                    <ul class="footer-links">
+                        <li><a href="/PromotionRequests">طلبات الترقية</a></li>
+                        <li><a href="/Reports">البلاغات</a></li>
+                        <li><a href="/AuditLogs">سجل النشاط</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 مهارة - أكاديمية طويق. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

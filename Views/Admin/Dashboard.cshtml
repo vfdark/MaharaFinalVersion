@@ -1,0 +1,389 @@
+@model List<MaharaFinalVersion.Controllers.AdminStudentViewModel>
+
+@{
+    ViewData["Title"] = "لوحة تحكم المشرف";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تحكم المشرف | أكاديمية طويق</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/admin-dashboard.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <span class="logo-icon">🎓</span>
+                </div>
+                <div class="sidebar-brand">
+                    <h2>أكاديمية طويق</h2>
+                    <p>لوحة المشرف</p>
+                </div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="#stats" class="nav-item active" data-tab="stats">
+                    <span class="nav-icon">📊</span>
+                    <span>الإحصائيات</span>
+                </a>
+                <a href="#sessions" class="nav-item" data-tab="sessions">
+                    <span class="nav-icon">📅</span>
+                    <span>الجلسات</span>
+                </a>
+                <a href="#students" class="nav-item" data-tab="students">
+                    <span class="nav-icon">👥</span>
+                    <span>الطلاب</span>
+                </a>
+                <a href="#instructors" class="nav-item" data-tab="instructors">
+                    <span class="nav-icon">👨‍🏫</span>
+                    <span>المدربين</span>
+                </a>
+                <a href="#settings" class="nav-item" data-tab="settings">
+                    <span class="nav-icon">⚙️</span>
+                    <span>الإعدادات</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="/StudentDashboard" class="nav-item">
+                    <span class="nav-icon">🏠</span>
+                    <span>لوحة الطالب</span>
+                </a>
+                <a href="/" class="nav-item">
+                    <span class="nav-icon">🚪</span>
+                    <span>تسجيل الخروج</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="content-header">
+                <div class="header-info">
+                    <h1 class="page-title">مرحباً، مشرف</h1>
+                    <p class="page-subtitle">إدارة الجلسات والطلاب في أكاديمية طويق</p>
+                </div>
+                <div class="status-badge">
+                    <span class="status-dot"></span>
+                    <span>مشرف نشط</span>
+                </div>
+            </header>
+
+            <!-- Stats Tab Content -->
+            <section id="stats" class="tab-content active">
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <p class="stat-label">إجمالي الجلسات</p>
+                            <p class="stat-value">5</p>
+                        </div>
+                        <div class="stat-icon purple">📅</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <p class="stat-label">إجمالي الطلاب</p>
+                            <p class="stat-value">@Model.Count</p>
+                        </div>
+                        <div class="stat-icon green">👥</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <p class="stat-label">إجمالي التفاعلات</p>
+                            <p class="stat-value">1,389</p>
+                        </div>
+                        <div class="stat-icon amber">💬</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <p class="stat-label">المدربين الجدد</p>
+                            <p class="stat-value">0</p>
+                        </div>
+                        <div class="stat-icon violet">✓</div>
+                    </div>
+                </div>
+
+                <!-- Most Interacted Sessions -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title-group">
+                            <h3 class="card-title">
+                                <span class="title-icon">📈</span>
+                                أكثر الجلسات تفاعلاً
+                            </h3>
+                            <p class="card-description">الجلسات التي حققت أعلى نسبة تفاعل من الطلاب</p>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="sessions-grid">
+                            <div class="session-card gold">
+                                <div class="session-rank">
+                                    <span class="rank-icon">🏆</span>
+                                    <span class="rank-number">#1</span>
+                                </div>
+                                <h4 class="session-title">الذكاء الاصطناعي</h4>
+                                <p class="session-instructor">نورة سعد</p>
+                                <div class="session-stats">
+                                    <div class="interactions">
+                                        <span class="icon">💬</span>
+                                        <span class="count">456</span>
+                                        <span class="label">تفاعل</span>
+                                    </div>
+                                    <div class="students">
+                                        <span class="icon">👥</span>
+                                        <span class="count">67</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="session-card">
+                                <div class="session-rank">
+                                    <span class="rank-number">#2</span>
+                                </div>
+                                <h4 class="session-title">أساسيات قواعد البيانات</h4>
+                                <p class="session-instructor">خالد عمر</p>
+                                <div class="session-stats">
+                                    <div class="interactions">
+                                        <span class="icon">💬</span>
+                                        <span class="count">312</span>
+                                        <span class="label">تفاعل</span>
+                                    </div>
+                                    <div class="students">
+                                        <span class="icon">👥</span>
+                                        <span class="count">52</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="session-card">
+                                <div class="session-rank">
+                                    <span class="rank-number">#3</span>
+                                </div>
+                                <h4 class="session-title">مقدمة في Python</h4>
+                                <p class="session-instructor">أحمد محمد</p>
+                                <div class="session-stats">
+                                    <div class="interactions">
+                                        <span class="icon">💬</span>
+                                        <span class="count">234</span>
+                                        <span class="label">تفاعل</span>
+                                    </div>
+                                    <div class="students">
+                                        <span class="icon">👥</span>
+                                        <span class="count">45</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sessions Tab Content -->
+            <section id="sessions" class="tab-content">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title-group">
+                            <h3 class="card-title">جميع الجلسات</h3>
+                            <p class="card-description">عرض وإدارة جميع الجلسات التعليمية</p>
+                        </div>
+                        <button class="btn btn-primary">
+                            <span>+</span> إضافة جلسة
+                        </button>
+                    </div>
+                    <div class="card-content">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>عنوان الجلسة</th>
+                                    <th>المدرب</th>
+                                    <th>عدد الطلاب</th>
+                                    <th>التفاعلات</th>
+                                    <th>التاريخ</th>
+                                    <th>الحالة</th>
+                                    <th>الإجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="title-cell">مقدمة في Python</td>
+                                    <td>أحمد محمد</td>
+                                    <td>45</td>
+                                    <td>234</td>
+                                    <td>2024-01-15</td>
+                                    <td><span class="badge badge-success">مكتملة</span></td>
+                                    <td>
+                                        <button class="btn-icon">✏️</button>
+                                        <button class="btn-icon danger">🗑️</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="title-cell">تطوير تطبيقات الويب</td>
+                                    <td>سارة علي</td>
+                                    <td>38</td>
+                                    <td>189</td>
+                                    <td>2024-01-18</td>
+                                    <td><span class="badge badge-warning">قادمة</span></td>
+                                    <td>
+                                        <button class="btn-icon">✏️</button>
+                                        <button class="btn-icon danger">🗑️</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="title-cell">أساسيات قواعد البيانات</td>
+                                    <td>خالد عمر</td>
+                                    <td>52</td>
+                                    <td>312</td>
+                                    <td>2024-01-20</td>
+                                    <td><span class="badge badge-success">مكتملة</span></td>
+                                    <td>
+                                        <button class="btn-icon">✏️</button>
+                                        <button class="btn-icon danger">🗑️</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="title-cell">الذكاء الاصطناعي</td>
+                                    <td>نورة سعد</td>
+                                    <td>67</td>
+                                    <td>456</td>
+                                    <td>2024-01-22</td>
+                                    <td><span class="badge badge-primary">جارية</span></td>
+                                    <td>
+                                        <button class="btn-icon">✏️</button>
+                                        <button class="btn-icon danger">🗑️</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="title-cell">تطوير تطبيقات الموبايل</td>
+                                    <td>محمد فهد</td>
+                                    <td>41</td>
+                                    <td>198</td>
+                                    <td>2024-01-25</td>
+                                    <td><span class="badge badge-warning">قادمة</span></td>
+                                    <td>
+                                        <button class="btn-icon">✏️</button>
+                                        <button class="btn-icon danger">🗑️</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Students Tab Content -->
+            <section id="students" class="tab-content">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title-group">
+                            <h3 class="card-title">
+                                <span class="title-icon">🏆</span>
+                                أفضل الطلاب
+                            </h3>
+                            <p class="card-description">الطلاب المؤهلون للترقية كمدربين (يشترط امتلاك مهارة تقنية)</p>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>الترتيب</th>
+                                    <th>اسم الطالب</th>
+                                    <th>النقاط</th>
+                                    <th>نوع المهارات</th>
+                                    <th>المهارات</th>
+                                    <th>الجلسات المكتملة</th>
+                                    <th>الإجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < Model.Count; i++)
+                                {
+                                    var student = Model[i];
+                                    <tr>
+                                        <td><span class="rank-badge">@((i + 1))</span></td>
+                                        <td class="name-cell">@student.FullName</td>
+                                        <td class="points-cell">@student.Points</td>
+                                        <td>
+                                            <span class="skill-type @(student.IsTechnical ? "technical" : "non-technical")">
+                                                @(student.IsTechnical ? "💻 تقني" : "🎨 غير تقني")
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <div class="skills-list">
+                                                @foreach (var skill in student.Skills)
+                                                {
+                                                    <span class="skill-tag">@skill</span>
+                                                }
+                                            </div>
+                                        </td>
+                                        <td>@student.CompletedSessions</td>
+                                        <td>
+    @if (student.IsTechnical)
+    {
+        <a asp-controller="Admin" asp-action="ConfirmPromote" asp-route-id="@student.Id" class="btn btn-warning btn-sm">
+    ترقية كمدرب
+</a>
+
+    }
+    else
+    {
+        <span class="text-muted">غير مؤهل</span>
+    }
+</td>
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Instructors Tab Content -->
+            <section id="instructors" class="tab-content">
+                <!-- Your original instructors tab content here (unchanged) -->
+            </section>
+
+            <!-- Settings Tab Content -->
+            <section id="settings" class="tab-content">
+                <!-- Your original settings tab content here (unchanged) -->
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Tab switching functionality
+        document.querySelectorAll('.nav-item[data-tab]').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                const tab = this.dataset.tab;
+                
+                // Update nav items
+                document.querySelectorAll('.nav-item[data-tab]').forEach(nav => nav.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Update tab content
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                document.getElementById(tab).classList.add('active');
+                
+                // Update header title
+                const titles = {
+                    stats: { title: 'مرحباً، مشرف', subtitle: 'إدارة الجلسات والطلاب في أكاديمية طويق' },
+                    sessions: { title: 'إدارة الجلسات', subtitle: 'عرض وإدارة جميع الجلسات التعليمية' },
+                    students: { title: 'إدارة الطلاب', subtitle: 'عرض وإدارة جميع الطلاب المسجلين' },
+                    instructors: { title: 'إدارة المدربين', subtitle: 'عرض وإدارة المدربين في الأكاديمية' },
+                    settings: { title: 'الإعدادات', subtitle: 'إعدادات النظام والتفضيلات' }
+                };
+                
+                document.querySelector('.page-title').textContent = titles[tab].title;
+                document.querySelector('.page-subtitle').textContent = titles[tab].subtitle;
+            });
+        });
+    </script>
+</body>
+</html>

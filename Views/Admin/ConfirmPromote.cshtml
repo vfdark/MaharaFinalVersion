@@ -1,0 +1,48 @@
+@model MaharaFinalVersion.Controllers.AdminStudentViewModel
+
+@{
+    ViewData["Title"] = "تأكيد ترقية الطالب";
+}
+
+<div class="confirmation-page">
+    <h2>تأكيد ترقية الطالب</h2>
+    <p>هل أنت متأكد من ترقية الطالب <strong>@Model.FullName</strong> ليصبح مدربًا؟</p>
+
+    <ul>
+        <li>النقاط: @Model.Points</li>
+        <li>المهارات: @(Model.Skills != null && Model.Skills.Any() ? string.Join(", ", Model.Skills) : "لا يوجد")</li>
+        <li>الجلسات المكتملة: @Model.CompletedSessions</li>
+    </ul>
+
+    <form asp-controller="Admin" asp-action="Promote" method="post">
+        @Html.AntiForgeryToken() <!-- مهم لحماية POST -->
+        <input type="hidden" name="id" value="@Model.Id" />
+        <button type="submit" class="btn btn-success">تأكيد الترقية</button>
+        <a asp-controller="Admin" asp-action="Dashboard" class="btn btn-secondary">إلغاء</a>
+    </form>
+</div>
+
+<style>
+    .confirmation-page {
+        max-width: 500px;
+        margin: 50px auto;
+        padding: 30px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background: #f9f9f9;
+        text-align: center;
+    }
+
+    .confirmation-page h2 {
+        margin-bottom: 20px;
+    }
+
+    .confirmation-page ul {
+        text-align: left;
+        margin-bottom: 20px;
+    }
+
+    .confirmation-page button, .confirmation-page a.btn {
+        margin: 5px;
+    }
+</style>

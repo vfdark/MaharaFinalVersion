@@ -1,0 +1,55 @@
+@model MaharaFinalVersion.Models.LiveSessionModel
+
+@{
+    ViewData["Title"] = "جلسة مباشرة | مهارة";
+}
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/live-session.css" />
+    <script src="https://cdn.agora.io/sdk/release/AgoraRTC_N.js"></script>
+</head>
+<body>
+    <header>
+        <h1>@Model.Title</h1>
+        <h3>Instructor: @Model.Instructor</h3>
+    </header>
+
+    <main class="session-container">
+        <!-- Screen share area -->
+        <div id="screen-share" class="screen-share-area">
+            <p>هنا ستظهر شاشة المعلم أو الطالب عند مشاركة الشاشة</p>
+        </div>
+
+        <!-- Participants list -->
+        <aside class="participants-list">
+            <h2>المشاركون</h2>
+            <ul id="participants">
+                @foreach (var p in Model.Participants ?? new List<MaharaFinalVersion.Models.Participant>())
+                {
+                    <li>@p.Name (@(p.IsHost ? "المضيف" : "المشارك")) @(p.IsSpeaking ? "- يتحدث" : "")</li>
+                }
+            </ul>
+        </aside>
+
+        <!-- Chat -->
+        <section class="chat-area">
+            <h2>المحادثة</h2>
+            <div id="messages">
+                @foreach (var msg in Model.Messages ?? new List<MaharaFinalVersion.Models.ChatMessage>())
+                {
+                    <p>@msg.Time - @msg.Sender: @msg.Message</p>
+                }
+            </div>
+            <input type="text" id="messageInput" placeholder="اكتب رسالة..." />
+            <button id="sendBtn">إرسال</button>
+        </section>
+    </main>
+
+    <script src="~/js/live-session.js"></script>
+</body>
+</html>

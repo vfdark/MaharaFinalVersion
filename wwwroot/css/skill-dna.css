@@ -1,0 +1,205 @@
+
+
+/* --- Reset --- */
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0 auto;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* --- Body --- */
+body {
+  background-color: #fff; /* White background */
+  color: #111;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 20em;
+  font-size: 20px;
+}
+
+/* --- Container --- */
+.skill-dna-page {
+  max-width: 1200px;
+  width: 100%;
+  padding: 2rem;
+}
+
+/* --- Header --- */
+.skill-dna-header {
+  margin-bottom: 2rem;
+}
+
+.skill-dna-header h1 {
+  font-size: 1.75rem;
+  color: #7c3aed; /* purple */
+  font-weight: bold;
+}
+
+.skill-btn {
+  padding: 0.5rem 1rem;
+  background-color: #7c3aed;
+  color: #fff;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background 0.3s;
+}
+
+.skill-btn:hover {
+  background-color: #a855f7;
+}
+
+/* --- Cards --- */
+.skill-card {
+  background-color: #f9f5ff; /* light purple tint */
+  border: 1px solid #e0d7f9;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 0.5rem 1rem rgba(124, 58, 237, 0.1);
+}
+
+.skill-card h2,
+.skill-card h3 {
+  color: #7c3aed;
+  margin-bottom: 0.5rem;
+}
+
+.skill-card p,
+.skill-card span {
+  color: #111;
+}
+
+/* --- Skill dots --- */
+.skill-dots {
+  display: flex;
+  gap: 0.3rem;
+  margin-top: 0.3rem;
+}
+
+.skill-dot {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  background-color: #e5e7eb; /* muted gray */
+  transition: background 0.3s;
+}
+
+.skill-dot.active {
+  background-color: #7c3aed; /* purple active */
+}
+
+/* --- Instructions --- */
+.skill-instructions {
+  text-align: center;
+  font-size: 0.9rem;
+  padding: 0.75rem;
+  background-color: #f3e8ff;
+  border-radius: 0.75rem;
+  color: #7c3aed;
+}
+
+/* --- Rank & Progress --- */
+.progress-bar {
+  height: 0.75rem;
+  background-color: #e5e7eb;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #7c3aed, #a855f7);
+  border-radius: 0.5rem;
+  transition: width 0.5s ease;
+}
+
+/* --- Achievements --- */
+.achievement {
+  background-color: #f3e8ff;
+  color: #7c3aed;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* --- DNA Animation --- */
+.dna {
+  position: relative;
+  transform: rotate(15deg);
+  transform-style: preserve-3d;
+  margin: 2rem auto;
+}
+
+/* Links in DNA */
+.link {
+  margin: 1em auto;
+  width: 10em;
+  height: 1em;
+  transform-style: preserve-3d;
+  animation: linkY 15s infinite linear;
+  animation-delay: var(--iad);
+}
+
+.link > div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.5;
+  background-image: radial-gradient(#fff, #fff0),
+    linear-gradient(90deg, #a855f7, #7c3aed);
+  box-shadow: 0 0 0.5em #7c3aed66;
+  animation: linkX 7.5s infinite linear reverse;
+}
+
+/* DNA pseudo elements */
+.link::before,
+.link::after {
+  content: '';
+  position: absolute;
+  top: -0.5em;
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
+  animation: linkY 15s infinite linear reverse;
+}
+
+.link::before {
+  left: -1.75em;
+  box-shadow: 0 0 1em #a855f7;
+  background-image: radial-gradient(circle at 50% 25%, #fff, #a855f7, #fff0 90%);
+}
+
+.link::after {
+  right: -1.75em;
+  box-shadow: 0 0 1em #7c3aed;
+  background-image: radial-gradient(circle at 50% 25%, #fff, #7c3aed, #fff0 90%);
+}
+
+/* Animations */
+@keyframes linkY {
+  0% {
+    transform: rotateY(0deg);
+  }
+  100% {
+    transform: rotateY(360deg);
+  }
+}
+
+@keyframes linkX {
+  0% {
+    transform: rotateX(0deg);
+  }
+  100% {
+    transform: rotateX(360deg);
+  }
+}

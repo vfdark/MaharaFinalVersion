@@ -1,0 +1,42 @@
+@model List<MaharaFinalVersion.Models.Session>
+
+<h2>جلساتي</h2>
+<a asp-action="Create" class="btn btn-success mb-3">جلسة جديدة</a>
+<a asp-controller="Sessions" asp-action="Explore" class="btn btn-primary">
+    استكشاف الجلسات
+</a>
+
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>العنوان</th>
+            <th>المهارة</th>
+            <th>الوصف</th>
+            <th>تاريخ الإنشاء</th>
+            <th>عدد الطلاب</th>
+            <th>الإجراءات</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var session in Model)
+        {
+            <tr>
+                <td>@session.Title</td>
+                <td>@session.Skill</td>
+                <td>@session.Description</td>
+                <td>@session.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>@session.StudentSession.Count</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@session.Id" class="btn btn-info btn-sm">تفاصيل</a>
+                    <a asp-action="Edit" asp-route-id="@session.Id" class="btn btn-warning btn-sm">تعديل</a>
+                    <form asp-action="Delete" asp-route-id="@session.Id" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('هل أنت متأكد من حذف هذه الجلسة؟');">
+                            حذف
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

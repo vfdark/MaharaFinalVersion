@@ -1,0 +1,120 @@
+@model MaharaFinalVersion.Models.SkillDNAVM
+
+@{
+    ViewData["Title"] = "Skill DNA";
+}
+
+<link rel="stylesheet" href="~/css/skill-dna.css" />
+
+<div class="skill-dna-page">
+
+    <!-- Header -->
+    <header class="skill-dna-header">
+        <div class="skill-dna-container">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div style="display:flex; align-items:center; gap:1rem;">
+                    <img src="/images/mahara-logo.svg" alt="مهارة" style="height:40px;" />
+                    <h1>Skill DNA</h1>
+                </div>
+
+                <a asp-controller="Home" asp-action="Index" class="skill-btn" style="width:auto;">
+                    العودة للرئيسية
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main -->
+    <main class="skill-dna-container">
+        <div class="skill-dna-grid">
+
+            <!-- LEFT: Skills -->
+            <div>
+                <div class="skill-card fade-up">
+                    <h2>@Model.FullName</h2>
+                    <p>النقاط: <strong>@Model.Points</strong></p>
+
+                    <hr />
+
+                    <h3>المهارات</h3>
+
+                    @foreach (var skill in Model.Skills)
+                    {
+                        <div class="core-skill" style="margin-bottom:10px;">
+                            <span>@skill.Name</span>
+
+                            <div class="skill-dots">
+                                @for (int i = 1; i <= 5; i++)
+                                {
+                                    <div class="skill-dot @(i <= skill.Level ? "active" : "")"></div>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <!-- Instructions -->
+                <div class="skill-instructions fade-up">
+                    💡 هذا تمثيل بصري لمهاراتك — كلما زاد المستوى زادت النقاط
+                </div>
+            </div>
+
+            <!-- RIGHT: Stats & DNA -->
+            <div class="fade-right">
+
+                <!-- Rank -->
+                <div class="skill-card gradient">
+                    <h3>ترتيبك</h3>
+
+                    <div class="rank-number">
+                        #@Model.Rank
+                    </div>
+
+                    <div class="progress-bar" style="margin-top:10px;">
+                        <div class="progress-fill"
+                             style="width:@((Model.Points * 100) / Model.MaxPoints)%">
+                        </div>
+                    </div>
+
+                    <small>@Model.Points / @Model.MaxPoints</small>
+                </div>
+
+                <!-- Achievements -->
+                <div class="skill-card" style="margin-top:20px;">
+                    <h3>الإنجازات</h3>
+
+                    <div style="display:flex; flex-wrap:wrap; gap:10px;">
+                        @foreach (var a in Model.Achievements)
+                        {
+                            <div class="achievement">
+                                ⭐ @a
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <!-- DNA Animation -->
+                <div class="skill-card dna-card" style="margin-top:20px; padding:20px; text-align:center;">
+                    <h3>تمثيل DNA للمهارات</h3>
+                    <div class="dna">
+                        @for (int i = 0; i < 24; i++)
+                        {
+                            <div class="link">
+                                <div></div>
+                                <div></div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <!-- CTA -->
+                <div style="margin-top:20px;">
+                    <a asp-controller="Sessions" asp-action="Index" class="skill-btn">
+                        استضف جلسة لكسب النقاط
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </main>
+</div>

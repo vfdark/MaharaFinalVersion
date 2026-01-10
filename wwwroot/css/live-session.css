@@ -1,0 +1,51 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #1e1e1e;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+}
+
+.session-container {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.screen-share-area {
+    flex: 2;
+    background: #000;
+    border-radius: 1rem;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.participants-list {
+    flex: 1;
+    background: #111;
+    padding: 1rem;
+    border-radius: 1rem;
+}
+
+.chat-area {
+    flex: 1;
+    background: #111;
+    padding: 1rem;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+#messages {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 0.5rem;
+}
+
+#messageInput {
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    border: none;
+}

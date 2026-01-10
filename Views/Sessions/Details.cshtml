@@ -1,0 +1,15 @@
+@model MaharaFinalVersion.Models.Session
+
+<h2>تفاصيل الجلسة</h2>
+
+<div class="card p-3">
+    <h4>العنوان: @Model.Title</h4>
+    <p><strong>المهارة:</strong> @(Model.Skill == "Technical" ? "تقنية" : "غير تقنية")</p>
+    <p><strong>الوصف:</strong> @Model.Description</p>
+    <p><strong>أنشأها:</strong> @Model.Creator.FullName</p>
+    <p><strong>تاريخ الإنشاء:</strong> @Model.CreatedAt.ToString("dd/MM/yyyy HH:mm")</p>
+</div>
+
+<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning mt-2">تعديل</a>
+<a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger mt-2">حذف</a>
+<a asp-action="Index" class="btn btn-secondary mt-2">العودة إلى جلساتي</a>

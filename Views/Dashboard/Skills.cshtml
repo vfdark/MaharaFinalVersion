@@ -1,0 +1,30 @@
+@model MaharaFinalVersion.Models.User
+
+<h2>مهاراتي</h2>
+
+<form asp-action="AddSkill" method="post">
+    <input type="text" name="skill" placeholder="أدخل مهارة" required />
+    <button type="submit">إضافة</button>
+</form>
+
+<hr />
+
+@if (Model.Skills != null && Model.Skills.Any())
+{
+    <ul>
+        @foreach (var skill in Model.Skills)
+        {
+            <li>
+                @skill
+                <form asp-action="RemoveSkill" method="post" style="display:inline">
+                    <input type="hidden" name="skill" value="@skill" />
+                    <button type="submit">❌</button>
+                </form>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>لم تضف أي مهارات بعد.</p>
+}

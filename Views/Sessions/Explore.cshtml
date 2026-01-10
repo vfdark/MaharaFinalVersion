@@ -1,0 +1,63 @@
+<a asp-controller="Sessions" asp-action="LiveSession" class="btn btn-primary">
+    مشاهدة الجلسة المباشرة
+</a>
+
+
+<h2>استكشف الجلسات</h2>
+
+
+<div class="row">
+@foreach (var s in Model)
+{
+    <div class="col-md-4 mb-3">
+        <div class="card p-3">
+            <h5>@s.Title</h5>
+            <p>@s.Description</p>
+
+            <p><strong>المهارة:</strong> @s.Skill</p>
+
+            <p>
+                <strong>الحالة:</strong>
+                @if (s.IsLive)
+                {
+                    <span style="color:red;font-weight:bold">🔴 مباشر الآن</span>
+                }
+                else
+                {
+                    <span>⏰ قريباً</span>
+                }
+            </p>
+
+            <p>
+                <strong>عدد الطلاب:</strong>
+                @s.StudentSession.Count
+            </p>
+
+            @if (s.StartTime != null)
+            {
+                <p>
+                    <strong>الوقت:</strong>
+                    @s.StartTime?.ToString("dd/MM/yyyy HH:mm")
+
+                </p>
+            }
+
+            @if (s.Duration != null)
+            {
+                <p>
+                    <strong>المدة:</strong>
+                    @s.Duration دقيقة
+                </p>
+            }
+
+            <a asp-action="Details" asp-route-id="@s.Id" class="btn btn-primary btn-sm">
+                عرض التفاصيل
+            </a>
+             <!-- زر الانضمام -->
+        <a asp-controller="Sessions" asp-action="LiveSession" asp-route-id="@s.Id" class="btn btn-success">
+            انضم
+        </a>
+        </div>
+    </div>
+}
+</div>

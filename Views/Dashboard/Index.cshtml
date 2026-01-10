@@ -1,0 +1,155 @@
+@{
+    ViewData["Title"] = "لوحة التحكم | مهارة";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/dashboard.css" />
+</head>
+<body>
+    <div class="dashboard-layout">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <a href="/" class="logo-link">
+                    <div class="logo-icon">🌟</div>
+                    <span class="logo-text">مهارة</span>
+                </a>
+                <div class="session-card" onclick="location.href='@Url.Action("Index", "Sessions")'">
+    <h4>جلساتي</h4>
+</div>
+
+            </div>
+            <nav class="sidebar-nav">
+                <a asp-controller="Home" asp-action="Index" class="nav-item active">الرئيسية</a>
+                <a asp-controller="Sessions" asp-action="Index" class="nav-item">جلساتي</a>
+                <a asp-controller="Projects" asp-action="Index" class="nav-item">المشاريع</a>
+                <a asp-controller="Chat" asp-action="Index" class="nav-item">المحادثات</a>
+                <a asp-controller="Achievements" asp-action="Index" class="nav-item">الإنجازات</a>
+                <a asp-controller="Schedule" asp-action="Index" class="nav-item">الجدول</a>
+                <a asp-controller="Settings" asp-action="Index" class="nav-item">الإعدادات</a>
+                <a href="/Dashboard/Skills">🛠 مهاراتي</a>
+                <a asp-action="SkillDNA" class="skill-btn">
+    🧬 استعرض خريطة مهاراتك (Skill DNA)
+</a>
+
+
+            </nav>
+            <div class="sidebar-profile">
+                <div class="profile-info">
+                    <div class="profile-avatar">م</div>
+                    <div class="profile-details">
+                        <p class="profile-name">@User.Identity.Name</p>
+                        <p class="profile-role">طالب</p>
+                    </div>
+                </div>
+                <form asp-controller="Account" asp-action="Logout" method="post">
+                    <button type="submit" class="logout-btn">تسجيل الخروج</button>
+                </form>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <header class="dashboard-header">
+                <div class="header-right">
+                    <input type="text" class="search-box" placeholder="ابحث عن جلسات، مشاريع..." />
+                </div>
+                <div class="header-left">
+                    <div class="mobile-avatar">@User.Identity.Name.Substring(0,1)</div>
+                </div>
+            </header>
+
+            <main class="dashboard-main">
+                <!-- Welcome -->
+                <div class="welcome-section">
+                    <h1>مرحباً، <span class="text-gradient">@User.Identity.Name</span> 👋</h1>
+                    <p>تابع تقدمك وجلساتك القادمة</p>
+                </div>
+
+                <!-- Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <p class="stat-label">جلسات مكتملة</p>
+                        <p class="stat-value">@Model.CompletedSessions</p>
+                    </div>
+                    <div class="stat-card">
+                        <p class="stat-label">ساعات التعلم</p>
+                        <p class="stat-value">@Model.LearningHours</p>
+                    </div>
+                    <div class="stat-card">
+                        <p class="stat-label">الإنجازات</p>
+                        <p class="stat-value">@Model.AchievementsCount</p>
+                    </div>
+                    <div class="stat-card">
+                        <p class="stat-label">المشاريع</p>
+                        <p class="stat-value">@Model.ProjectsCount</p>
+                    </div>
+                </div>
+
+                <!-- Skills Progress -->
+                <div class="card">
+                    <h3>تقدم المهارات</h3>
+                    @foreach(var skill in Model.Skills)
+                    {
+                        <div class="skill-item">
+                            <span>@skill.Name</span>
+                            <span>@skill.Percent %</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width:@skill.Percent%"></div>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <!-- Upcoming Sessions -->
+                <div class="card">
+                    <h3>الجلسات القادمة</h3>
+                    @foreach(var session in Model.UpcomingSessions)
+                    {
+                        <div class="session-item">
+                            <h4>@session.Title</h4>
+                            <p>@session.Instructor</p>
+                            <span>@session.Date.ToString("dddd - h:mm tt")</span>
+                        </div>
+                    }
+                </div>
+
+                <!-- Projects -->
+                <div class="card">
+                    <h3>المشاريع</h3>
+                    @foreach(var project in Model.Projects)
+                    {
+                        <div class="project-item">
+                            <h4>@project.Title</h4>
+                            <p>@project.CompletedTasks / @project.TotalTasks مهمة</p>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width:@project.Progress%"></div>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <!-- Chat -->
+                <div class="card chat-card">
+                    <h3>المحادثات</h3>
+                    @foreach(var chat in Model.Chats)
+                    {
+                        <div class="conversation-item">
+                            <p>@chat.UserName</p>
+                            <p>@chat.LastMessage</p>
+                        </div>
+                        
+                    }
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html>
