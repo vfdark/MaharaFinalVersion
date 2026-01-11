@@ -1,19 +1,32 @@
 @model MaharaFinalVersion.Models.Session
 
-<h2>حذف الجلسة</h2>
+<div class="delete-page">
+    <div class="container">
+        <link rel="stylesheet" href="~/css/SessionDelete.css" />
 
-<div class="alert alert-danger">
-    هل أنت متأكد أنك تريد حذف هذه الجلسة نهائياً؟
+        <!-- Page Header -->
+        <div class="page-header">
+            <span class="page-badge">حذف الجلسة</span>
+            <h1 class="page-title">حذف الجلسة</h1>
+        </div>
+
+        <!-- Alert -->
+        <div class="alert alert-danger">
+            هل أنت متأكد أنك تريد حذف هذه الجلسة نهائياً؟
+        </div>
+
+        <!-- Session Card -->
+        <div class="card session-details-card p-3 mb-3">
+            <h4>العنوان: @Model.Title</h4>
+            <p><strong>المهارة:</strong> @(Model.Skill == "Technical" ? "تقنية" : "غير تقنية")</p>
+            <p><strong>الوصف:</strong> @Model.Description</p>
+        </div>
+
+        <!-- Action Buttons -->
+        <form asp-action="Delete" method="get" class="action-buttons">
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="btn btn-danger">حذف الجلسة</button>
+            <a asp-action="Index" class="btn btn-secondary">إلغاء</a>
+        </form>
+    </div>
 </div>
-
-<div class="card p-3 mb-3">
-    <h4>العنوان: @Model.Title</h4>
-    <p><strong>المهارة:</strong> @(Model.Skill == "Technical" ? "تقنية" : "غير تقنية")</p>
-    <p><strong>الوصف:</strong> @Model.Description</p>
-</div>
-
-<form asp-action="Delete" method="get">
-    <input type="hidden" asp-for="Id" />
-    <button type="submit" class="btn btn-danger">حذف الجلسة</button>
-    <a asp-action="Index" class="btn btn-secondary">إلغاء</a>
-</form>

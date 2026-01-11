@@ -78,7 +78,7 @@ using (var scope = app.Services.CreateScope())
             FullName = "مشرف النظام",
             AccessFailedCount = 0,   // Required
             IsInstructor = false,    // Required
-            EmailConfirmed = true     // Optional, but recommended
+            EmailConfirmed = true     
         };
 
         var result = await userManager.CreateAsync(adminUser, adminPassword);

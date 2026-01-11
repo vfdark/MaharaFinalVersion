@@ -1,63 +1,66 @@
-<a asp-controller="Sessions" asp-action="LiveSession" class="btn btn-primary">
-    مشاهدة الجلسة المباشرة
-</a>
+@model List<MaharaFinalVersion.Models.Session>
 
+<div class="explore-page">
+    <div class="container">
+        <link rel="stylesheet" href="~/css/ExploreSessions.css" />
 
-<h2>استكشف الجلسات</h2>
+        <!-- Page Header -->
+        <div class="page-header">
+            <span class="page-badge">استكشاف الجلسات</span>
+            <h1 class="page-title">الجلسات المتاحة</h1>
+        </div>
 
-
-<div class="row">
-@foreach (var s in Model)
-{
-    <div class="col-md-4 mb-3">
-        <div class="card p-3">
-            <h5>@s.Title</h5>
-            <p>@s.Description</p>
-
-            <p><strong>المهارة:</strong> @s.Skill</p>
-
-            <p>
-                <strong>الحالة:</strong>
-                @if (s.IsLive)
-                {
-                    <span style="color:red;font-weight:bold">🔴 مباشر الآن</span>
-                }
-                else
-                {
-                    <span>⏰ قريباً</span>
-                }
-            </p>
-
-            <p>
-                <strong>عدد الطلاب:</strong>
-                @s.StudentSession.Count
-            </p>
-
-            @if (s.StartTime != null)
-            {
-                <p>
-                    <strong>الوقت:</strong>
-                    @s.StartTime?.ToString("dd/MM/yyyy HH:mm")
-
-                </p>
-            }
-
-            @if (s.Duration != null)
-            {
-                <p>
-                    <strong>المدة:</strong>
-                    @s.Duration دقيقة
-                </p>
-            }
-
-            <a asp-action="Details" asp-route-id="@s.Id" class="btn btn-primary btn-sm">
-                عرض التفاصيل
+        <!-- Live Session Button -->
+        <div class="action-buttons">
+            <a asp-controller="Sessions" asp-action="LiveSession" class="btn btn-primary">
+                مشاهدة الجلسة المباشرة
             </a>
-             <!-- زر الانضمام -->
-        <a asp-controller="Sessions" asp-action="LiveSession" asp-route-id="@s.Id" class="btn btn-success">
-            انضم
-        </a>
+        </div>
+
+        <!-- Sessions Grid -->
+        <div class="sessions-grid">
+            @foreach (var s in Model)
+            {
+                <div class="session-card">
+                    <h5 class="session-title">@s.Title</h5>
+                    <p class="session-description">@s.Description</p>
+
+                    <p><strong>المهارة:</strong> @s.Skill</p>
+
+                    <p>
+                        <strong>الحالة:</strong>
+                        @if (s.IsLive)
+                        {
+                            <span class="live-now">🔴 مباشر الآن</span>
+                        }
+                        else
+                        {
+                            <span class="upcoming">⏰ قريباً</span>
+                        }
+                    </p>
+
+                    <p><strong>عدد الطلاب:</strong> @s.StudentSession.Count</p>
+
+                    @if (s.StartTime != null)
+                    {
+                        <p><strong>الوقت:</strong> @s.StartTime?.ToString("dd/MM/yyyy HH:mm")</p>
+                    }
+
+                    @if (s.Duration != null)
+                    {
+                        <p><strong>المدة:</strong> @s.Duration دقيقة</p>
+                    }
+
+                    <div class="card-buttons">
+                        <a asp-action="Details" asp-route-id="@s.Id" class="btn btn-primary btn-sm">
+                            عرض التفاصيل
+                        </a>
+                        <a asp-controller="Sessions" asp-action="LiveSession" asp-route-id="@s.Id" class="btn btn-success btn-sm">
+                            انضم
+                        </a>
+                    </div>
+                </div>
+            }
         </div>
     </div>
-}
 </div>

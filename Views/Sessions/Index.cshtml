@@ -1,42 +1,66 @@
 @model List<MaharaFinalVersion.Models.Session>
 
-<h2>جلساتي</h2>
-<a asp-action="Create" class="btn btn-success mb-3">جلسة جديدة</a>
-<a asp-controller="Sessions" asp-action="Explore" class="btn btn-primary">
-    استكشاف الجلسات
-</a>
+<div class="sessions-page">
+    <div class="container">
+        <link rel="stylesheet" href="~/css/Session.css" />
 
+        <!-- Page Header -->
+        <div class="page-header">
+            <span class="page-badge">إدارة الجلسات</span>
+            <h1 class="page-title">جلساتي</h1>
+        </div>
 
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>العنوان</th>
-            <th>المهارة</th>
-            <th>الوصف</th>
-            <th>تاريخ الإنشاء</th>
-            <th>عدد الطلاب</th>
-            <th>الإجراءات</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach(var session in Model)
-        {
-            <tr>
-                <td>@session.Title</td>
-                <td>@session.Skill</td>
-                <td>@session.Description</td>
-                <td>@session.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
-                <td>@session.StudentSession.Count</td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@session.Id" class="btn btn-info btn-sm">تفاصيل</a>
-                    <a asp-action="Edit" asp-route-id="@session.Id" class="btn btn-warning btn-sm">تعديل</a>
-                    <form asp-action="Delete" asp-route-id="@session.Id" method="post" style="display:inline;">
-                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('هل أنت متأكد من حذف هذه الجلسة؟');">
-                            حذف
-                        </button>
-                    </form>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <a asp-action="Create" class="btn btn-primary">جلسة جديدة</a>
+            <a asp-controller="Sessions" asp-action="Explore" class="btn btn-outline">استكشاف الجلسات</a>
+        </div>
+
+        <!-- Table Card -->
+        <div class="table-card">
+            @if (Model != null && Model.Count > 0)
+            {
+                <table class="sessions-table">
+                    <thead>
+                        <tr>
+                            <th>العنوان</th>
+                            <th>المهارة</th>
+                            <th>الوصف</th>
+                            <th>تاريخ الإنشاء</th>
+                            <th>عدد الطلاب</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var session in Model)
+                        {
+                            <tr>
+                                <td>@session.Title</td>
+                                <td>@session.Skill</td>
+                                <td>@session.Description</td>
+                                <td>@session.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                                <td>@session.StudentSession.Count</td>
+                                <td class="actions">
+                                    <a asp-action="Details" asp-route-id="@session.Id" class="btn btn-info btn-sm">تفاصيل</a>
+                                    <a asp-action="Edit" asp-route-id="@session.Id" class="btn btn-warning btn-sm">تعديل</a>
+                                    <form asp-action="Delete" asp-route-id="@session.Id" method="post" style="display:inline;">
+                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('هل أنت متأكد من حذف هذه الجلسة؟');">
+                                            حذف
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div class="empty-state">
+                    <div class="empty-state-icon">📭</div>
+                    <div>لا توجد جلسات بعد.</div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

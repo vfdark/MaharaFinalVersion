@@ -17,7 +17,7 @@ body {
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; 
   perspective: 20em;
   font-size: 20px;
 }
@@ -202,4 +202,112 @@ body {
   100% {
     transform: rotateX(360deg);
   }
+  
 }
+.orbit-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 3rem 0;
+  position: relative;
+}
+
+.orbit {
+  width: 40em;
+  height: 40em;
+  position: relative;
+}
+
+.orbit-wrap {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+.orbit-wrap > li {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Center Icon */
+.orbit-center {
+  z-index: 5;
+  font-size: 2em;
+  width: 3em;
+  height: 3em;
+  line-height: 3em;
+  text-align: center;
+  background: #7c3aed; /* Purple */
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 15px rgba(124, 58, 237, 0.4);
+}
+
+.orbit-center__icon {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Orbit Icons */
+.orbit-icon {
+  width: 2em;
+  height: 2em;
+  line-height: 2em;
+  border-radius: 50%;
+  background: #a855f7;
+  color: #fff;
+  text-align: center;
+  display: block;
+  box-shadow: 0 0 8px rgba(168, 85, 247, 0.6);
+}
+
+/* Rings */
+ul[class^="ring"] {
+  position: relative;
+  list-style: none;
+  border-radius: 50%;
+  padding: 0;
+  margin: 0;
+  border: solid 1px rgba(124, 58, 237, 0.3);
+}
+
+ul[class^="ring"] li {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2em;
+  height: 2em;
+  margin: -1em;
+}
+
+/* Animations */
+.ring-0 { width: 25em; height: 25em; animation: clockwiseRotate 35s linear infinite; }
+.ring-0 i { animation: counterClockwiseRotate 35s linear infinite; }
+
+.ring-1 { width: 20em; height: 20em; animation: clockwiseRotate 30s linear infinite; }
+.ring-1 i { animation: counterClockwiseRotate 30s linear infinite; }
+
+.ring-2 { width: 15em; height: 15em; animation: clockwiseRotate 25s linear infinite; }
+.ring-2 i { animation: counterClockwiseRotate 25s linear infinite; }
+
+.ring-3 { width: 10em; height: 10em; animation: clockwiseRotate 20s linear infinite; }
+.ring-3 i { animation: counterClockwiseRotate 20s linear infinite; }
+
+@keyframes clockwiseRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes counterClockwiseRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+

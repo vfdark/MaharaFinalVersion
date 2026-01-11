@@ -1,10 +1,13 @@
 @model MaharaFinalVersion.Models.User
 
+
+
 <h2>مهاراتي</h2>
 
 <form asp-action="AddSkill" method="post">
     <input type="text" name="skill" placeholder="أدخل مهارة" required />
     <button type="submit">إضافة</button>
+      <link rel="stylesheet" href="~/css/skill-badge.css" />
 </form>
 
 <hr />
