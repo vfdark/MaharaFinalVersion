@@ -4,10 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using MaharaFinalVersion.Data;
 using MaharaFinalVersion.Models;
 using System.Security.Claims;
+using System.Linq;
 
 namespace MaharaFinalVersion.Controllers
 {
-    [Authorize] // only logged-in users can access
+    [Authorize]
     public class SessionsController : Controller
     {
         private readonly Mahara2DbContext _context;
@@ -17,16 +18,17 @@ namespace MaharaFinalVersion.Controllers
             _context = context;
         }
 
-  
+        // ------------------------------
+        // Index – show sessions created by logged-in user
+        // ------------------------------
         public async Task<IActionResult> Index()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            if (string.IsNullOrEmpty(userId))
-                return RedirectToAction("Login", "Account");
+            if (string.IsNullOrEmpty(userId)) return RedirectToAction("Login", "Account");
 
             var sessions = await _context.Sessions
                 .Include(s => s.StudentSession)
+                    .ThenInclude(ss => ss.Student)
                 .Include(s => s.Creator)
                 .Where(s => s.CreatorId == userId)
                 .ToListAsync();
@@ -34,117 +36,92 @@ namespace MaharaFinalVersion.Controllers
             return View(sessions);
         }
 
-   
-        public IActionResult Create()
-        {
-            return View();
-        }
+        // ------------------------------
+        // Create Session
+        // ------------------------------
+        public IActionResult Create() => View();
 
-      
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Session session)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userId)) return Content("Error: User is not logged in!");
+            if (!ModelState.IsValid) return View(session);
 
-            if (string.IsNullOrEmpty(userId))
-                return Content("Error: User is not logged in!");
+            session.CreatorId = userId;
+            session.CreatedAt = DateTime.Now;
 
-            if (!ModelState.IsValid)
-                return View(session);
-
-            try
-            {
-                session.CreatorId = userId; // assign logged-in user as creator
-                session.CreatedAt = DateTime.Now;
-
-                _context.Sessions.Add(session);
-                await _context.SaveChangesAsync();
-
-                return RedirectToAction(nameof(Index)); // redirect to جلساتي
-            }
-            catch (DbUpdateException dbEx)
-            {
-                return Content($"Database error: {dbEx.InnerException?.Message ?? dbEx.Message}");
-            }
+            _context.Sessions.Add(session);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
-
+        // ------------------------------
+        // Details
+        // ------------------------------
         public async Task<IActionResult> Details(int id)
         {
             var session = await _context.Sessions
                 .Include(s => s.Creator)
                 .Include(s => s.StudentSession)
+                    .ThenInclude(ss => ss.Student)
                 .FirstOrDefaultAsync(s => s.Id == id);
 
             if (session == null) return NotFound();
-
             return View(session);
         }
 
-   
+        // ------------------------------
+        // Edit
+        // ------------------------------
         public async Task<IActionResult> Edit(int id)
         {
             var session = await _context.Sessions.FindAsync(id);
             if (session == null) return NotFound();
-
-            if (session.CreatorId != User.FindFirstValue(ClaimTypes.NameIdentifier))
-                return Forbid();
-
+            if (session.CreatorId != User.FindFirstValue(ClaimTypes.NameIdentifier)) return Forbid();
             return View(session);
         }
 
-     
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Session editedSession)
         {
             if (id != editedSession.Id) return BadRequest();
-
             if (!ModelState.IsValid) return View(editedSession);
 
-            try
-            {
-            
-                var session = await _context.Sessions.AsNoTracking().FirstOrDefaultAsync(s => s.Id == id);
-                if (session == null) return NotFound();
+            var session = await _context.Sessions.AsNoTracking().FirstOrDefaultAsync(s => s.Id == id);
+            if (session == null) return NotFound();
 
-          
-                editedSession.CreatorId = session.CreatorId;
-                editedSession.CreatedAt = session.CreatedAt;
+            editedSession.CreatorId = session.CreatorId;
+            editedSession.CreatedAt = session.CreatedAt;
 
-                _context.Sessions.Update(editedSession);
-                await _context.SaveChangesAsync();
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch (DbUpdateException ex)
-            {
-                return Content($"Database error: {ex.InnerException?.Message ?? ex.Message}");
-            }
+            _context.Sessions.Update(editedSession);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
-
+        // ------------------------------
+        // Delete
+        // ------------------------------
         public async Task<IActionResult> Delete(int id)
         {
             var session = await _context.Sessions.FindAsync(id);
             if (session == null) return NotFound();
-
-            if (session.CreatorId != User.FindFirstValue(ClaimTypes.NameIdentifier))
-                return Forbid();
+            if (session.CreatorId != User.FindFirstValue(ClaimTypes.NameIdentifier)) return Forbid();
 
             _context.Sessions.Remove(session);
             await _context.SaveChangesAsync();
-
             return RedirectToAction(nameof(Index));
         }
 
-  
+        // ------------------------------
+        // Test session creation
+        // ------------------------------
         [HttpGet]
         public async Task<IActionResult> TestCreateSession()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
             var testSession = new Session
             {
                 Title = "جلسة اختبار",
@@ -156,96 +133,75 @@ namespace MaharaFinalVersion.Controllers
 
             _context.Sessions.Add(testSession);
             await _context.SaveChangesAsync();
-
             return RedirectToAction(nameof(Index));
         }
-   public IActionResult LiveSession()
-{
-    var liveSession = new LiveSessionModel
+
+        // ------------------------------
+        // Live Session
+        // ------------------------------
+        public async Task<IActionResult> LiveSession(int id)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var session = await _context.Sessions
+                .Include(s => s.Creator)
+                .Include(s => s.StudentSession)
+                    .ThenInclude(ss => ss.Student)
+                .FirstOrDefaultAsync(s => s.Id == id);
+
+            if (session == null) return NotFound();
+
+            var participants = session.StudentSession.Select(ss => new Participant
+            {
+                Id = ss.StudentId,
+                Name = ss.Student?.FullName ?? "Unknown",
+                IsHost = ss.StudentId == session.CreatorId
+            }).ToList();
+
+            // If your DbContext does not have SessionInteractions, comment this block:
+            var messages = await _context.SessionInteractions
+    .Include(si => si.User) // ensure User is loaded
+    .Where(si => si.SessionId == id)
+    .Select(m => new ChatMessage
     {
-        Title = "جلسة تعلم C# مباشرة",
-        Instructor = "رحاف",
-        Participants = new List<Participant>
-        {
-            new Participant { Name = "رحاف", IsHost = true, IsSpeaking = true },
-            new Participant { Name = "محمد", IsHost = false, IsSpeaking = false },
-            new Participant { Name = "نورة", IsHost = false, IsSpeaking = true }
-        },
-        Messages = new List<ChatMessage>
-        {
-            new ChatMessage { Sender = "رحاف", Message = "مرحبا بالجميع!", Time = "10:00" },
-            new ChatMessage { Sender = "محمد", Message = "مرحبا!", Time = "10:01" },
-            new ChatMessage { Sender = "نورة", Message = "جاهزة للدرس", Time = "10:02" }
+        Sender = m.User != null ? m.User.FullName : "Unknown",
+        Message = m.Comment,
+        Time = m.CreatedAt.ToString("HH:mm")
+    })
+    .ToListAsync();
+
+            var liveSession = new LiveSessionModel
+            {
+                Id = session.Id,
+                Title = session.Title,
+                Instructor = session.Creator.FullName,
+                CreatorId = session.CreatorId,
+                Participants = participants,
+                Messages = messages,
+                IsHost = userId == session.CreatorId
+            };
+
+            return View(liveSession);
         }
-    };
 
-    return View(liveSession);
-}
+        // ------------------------------
+        // Explore
+        // ------------------------------
+        [AllowAnonymous]
+        public IActionResult Explore()
+        {
+            var sessions = _context.Sessions
+                .Include(s => s.Creator)
+                .Include(s => s.StudentSession)
+                .Take(10)
+                .ToList();
 
-        [AllowAnonymous] 
-public IActionResult Explore()
-{
-    var sessions = new List<Session>
-    {
-        new Session
-        {
-            Id = 1,
-            Title = "شرح Git و GitHub للمبتدئين",
-            Skill = "Technical",
-            Description = "مقدمة عملية على Git و GitHub",
-            CreatorId = "1",
-            IsLive = true,
-            StartTime = DateTime.Now.AddMinutes(-20),
-            Duration = 60,
-            StudentSession = new List<StudentSession>
-            {
-                new StudentSession(),
-                new StudentSession(),
-                new StudentSession()
-            }
-        },
-        new Session
-        {
-            Id = 2,
-            Title = "تصميم واجهات باستخدام Figma",
-            Skill = "Design",
-            Description = "تعلم أساسيات تصميم UI/UX",
-            CreatorId = "2",
-            IsLive = false,
-            StartTime = DateTime.Now.AddHours(2),
-            Duration = 90,
-            StudentSession = new List<StudentSession>
-            {
-                new StudentSession(),
-                new StudentSession()
-            }
-        },
-        new Session
-        {
-            Id = 3,
-            Title = "Python Data Analysis",
-            Skill = "Technical",
-            Description = "تحليل البيانات باستخدام Python",
-            CreatorId = "3",
-            IsLive = true,
-            StartTime = DateTime.Now.AddMinutes(-10),
-            Duration = 75,
-            StudentSession = new List<StudentSession>
-            {
-                new StudentSession(),
-                new StudentSession(),
-                new StudentSession(),
-                new StudentSession()
-            }
+            return View(sessions);
         }
-    };
 
-    return View(sessions);
-}
-
-
+        
+        
+        
     }
-}
-        
-        
     
+}

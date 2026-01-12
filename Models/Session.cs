@@ -17,6 +17,9 @@ namespace MaharaFinalVersion.Models
            
 
         public ICollection<StudentSession> StudentSession { get; set; } = new List<StudentSession>();
+        public ICollection<SessionInteraction> Interactions { get; set; } = new List<SessionInteraction>();
+
+
 
     }
 }

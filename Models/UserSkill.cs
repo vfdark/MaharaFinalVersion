@@ -8,7 +8,8 @@ namespace MaharaFinalVersion.Models
         public int Id { get; set; }
 
         public string UserId { get; set; }
-        public ApplicationUser User { get; set; }
+       public User User { get; set; } = null!;  // same as above
+
 
         public string SkillName { get; set; }
         public string Level { get; set; }

@@ -9,7 +9,7 @@ namespace MaharaFinalVersion.Models
         public int Id { get; set; }
 
         public string StudentId { get; set; }
-        public virtual ApplicationUser Student { get; set; }
+        public virtual User Student { get; set; }
 
         public DateTime PromotedAt { get; set; } = DateTime.Now;
     }

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using MaharaFinalVersion.Models;
 
+
 namespace MaharaFinalVersion.Data
 
 
@@ -16,6 +17,7 @@ namespace MaharaFinalVersion.Data
         public DbSet<Session> Sessions { get; set; } = null!;
         public DbSet<StudentSession> StudentSessions { get; set; } = null!;
         public DbSet<InstructorPromotion> InstructorPromotions { get; set; } = null!;
+         public DbSet<SessionInteraction> SessionInteractions { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -81,6 +83,32 @@ namespace MaharaFinalVersion.Data
                       .OnDelete(DeleteBehavior.ClientSetNull)
                       .HasConstraintName("FK_InstructorPromotions_Student");
             });
+                // -------------------- SessionInteraction --------------------
+            builder.Entity<SessionInteraction>(entity =>
+            {
+                entity.HasKey(e => e.Id)
+                      .HasName("PK_SessionInteractions");
+
+                entity.Property(e => e.Comment).IsRequired();
+                entity.Property(e => e.CreatedAt)
+                      .HasDefaultValueSql("(getdate())")
+                      .HasColumnType("datetime");
+
+                entity.Property(e => e.UserId).HasMaxLength(450);
+
+                entity.HasOne(d => d.Session)
+                      .WithMany(p => p.Interactions)
+                      .HasForeignKey(d => d.SessionId)
+                      .OnDelete(DeleteBehavior.Cascade)
+                      .HasConstraintName("FK_SessionInteractions_Session");
+
+                entity.HasOne(d => d.User)
+          .WithMany(p => p.SessionInteractions)
+          .HasForeignKey(d => d.UserId)
+          .OnDelete(DeleteBehavior.Cascade)
+          .HasConstraintName("FK_SessionInteractions_User");
+});
         }
+        
     }
 }

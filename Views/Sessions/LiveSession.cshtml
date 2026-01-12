@@ -3,27 +3,27 @@
 @{
     ViewData["Title"] = "جلسة مباشرة | مهارة";
 }
-<link rel="stylesheet" asp-href-include="~/css/live-session.css" />
-<footer>
-    &copy; 2026 مهارة - Live Session. جميع الحقوق محفوظة. 
-    <a href="#">سياسة الخصوصية</a>
-</footer>
 
+<link rel="stylesheet" href="~/css/live-session.css" />
 
+<!-- ✅ Agora SDK (ONLY ONCE) -->
+<script src="https://download.agora.io/sdk/release/AgoraRTC_N.js"></script>
 
 <div class="live-session-page">
+
     <header>
         <h1>@Model.Title</h1>
         <h3>المعلم: @Model.Instructor</h3>
     </header>
 
     <main class="session-container">
-        <!-- Screen Share Area -->
+
+        <!-- 🖥️ Screen Share Area -->
         <div id="screen-share" class="screen-share-area">
-            <p>هنا ستظهر شاشة المعلم أو الطالب عند مشاركة الشاشة</p>
+            <p id="screen-placeholder">لم يتم بدء مشاركة الشاشة بعد</p>
         </div>
 
-        <!-- Participants List -->
+        <!-- 👥 Participants -->
         <aside class="participants-list">
             <h2>المشاركون</h2>
             <ul id="participants">
@@ -35,26 +35,81 @@
                             <span class="host-badge">المضيف</span>
                         }
                         @p.Name
-                        @(p.IsSpeaking ? "- يتحدث" : "")
                     </li>
                 }
             </ul>
         </aside>
 
-        <!-- Chat Area -->
+        <!-- 💬 Chat -->
         <section class="chat-area">
             <h2>المحادثة</h2>
             <div id="messages">
                 @foreach (var msg in Model.Messages ?? new List<MaharaFinalVersion.Models.ChatMessage>())
                 {
-                    <p>@msg.Time - @msg.Sender: @msg.Message</p>
+                    <p>@msg.Time - <strong>@msg.Sender:</strong> @msg.Message</p>
                 }
             </div>
             <input type="text" id="messageInput" placeholder="اكتب رسالة..." />
             <button id="sendBtn">إرسال</button>
         </section>
+
     </main>
+
+    <!-- 🎥 Controls (Instructor Only) -->
+    @if (Model.IsHost)
+    {
+        <div class="live-controls">
+            <button class="btn btn-primary" onclick="startScreenShare()">🖥️ مشاركة الشاشة</button>
+            <button class="btn btn-danger" onclick="stopScreenShare()">⛔ إيقاف المشاركة</button>
+        </div>
+    }
+
 </div>
 
-<script src="https://cdn.agora.io/sdk/release/AgoraRTC_N.js"></script>
-<script src="~/js/live-session.js"></script>
+<footer>
+    &copy; 2026 مهارة - Live Session. جميع الحقوق محفوظة.
+    <a href="#">سياسة الخصوصية</a>
+</footer>
+
+<!-- ========================= -->
+<!-- Agora Screen Share Logic -->
+<!-- ========================= -->
+<script>
+    const APP_ID = "d0d5abfd738c42a2a956b631679d1971";
+    const CHANNEL = "Mahara";
+    const TOKEN = "007eJxTYLDYecAtcfFvhjXb3zs9LT45VS/CfXXBkjSlbXmuO17dPsStwJBikGKamJSWYm5skWxilGiUaGlqlmRmbGhmbpliaGlu+IM1NbMhkJFBWVaNiZEBAkF8NgbfxIzEokQGBgDmzSAI";
+
+    const client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
+    let screenTrack = null;
+
+    async function startScreenShare() {
+        try {
+            await client.join(APP_ID, CHANNEL, TOKEN, null);
+
+            screenTrack = await AgoraRTC.createScreenVideoTrack({
+                encoderConfig: "1080p"
+            });
+
+            const screenContainer = document.getElementById("screen-share");
+            screenContainer.innerHTML = "";
+            screenTrack.play(screenContainer);
+
+            await client.publish(screenTrack);
+        } catch (e) {
+            console.error(e);
+            alert("فشل بدء مشاركة الشاشة");
+        }
+    }
+
+    async function stopScreenShare() {
+        if (screenTrack) {
+            await client.unpublish(screenTrack);
+            screenTrack.stop();
+            screenTrack.close();
+            screenTrack = null;
+
+            document.getElementById("screen-share").innerHTML =
+                "<p>تم إيقاف مشاركة الشاشة</p>";
+        }
+    }
+</script>

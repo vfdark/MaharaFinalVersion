@@ -10,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 // ===============================
 builder.Services.AddDbContext<Mahara2DbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    builder.WebHost.UseUrls("http://0.0.0.0:5246"); 
 
 // ===============================
 // Identity

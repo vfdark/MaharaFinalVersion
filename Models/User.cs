@@ -12,8 +12,15 @@ namespace MaharaFinalVersion.Models
                    public int CompletedSessions { get; set; } = 0;
 
         // Navigation properties
-        public ICollection<Session> Sessions { get; set; } = new List<Session>();
-        public ICollection<StudentSession> StudentSessions { get; set; } = new List<StudentSession>();
-        public ICollection<InstructorPromotion> InstructorPromotions { get; set; } = new List<InstructorPromotion>();
+    // Add this to fix CS1061
+
+    public virtual ICollection<Session>? Sessions { get; set; }
+    public virtual ICollection<StudentSession>? StudentSessions { get; set; }
+    public virtual ICollection<InstructorPromotion>? InstructorPromotions { get; set; }
+
+        public virtual ICollection<SessionInteraction> SessionInteractions { get; set; } = new List<SessionInteraction>();
+
+
+        
     }
 }
