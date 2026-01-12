@@ -1,9 +1,9 @@
-@model List<MaharaFinalVersion.Controllers.AdminStudentViewModel>
+@model MaharaFinalVersion.Models.AdminDashboardViewModel
 
 @{
     ViewData["Title"] = "لوحة تحكم المشرف";
-    Layout = null;
 }
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -83,28 +83,28 @@
                     <div class="stat-card">
                         <div class="stat-info">
                             <p class="stat-label">إجمالي الجلسات</p>
-                            <p class="stat-value">5</p>
+                            <p class="stat-value">@Model.TotalSessions</p>
                         </div>
                         <div class="stat-icon purple">📅</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-info">
                             <p class="stat-label">إجمالي الطلاب</p>
-                            <p class="stat-value">@Model.Count</p>
+                            <p class="stat-value">@Model.TotalStudents</p>
                         </div>
                         <div class="stat-icon green">👥</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-info">
                             <p class="stat-label">إجمالي التفاعلات</p>
-                            <p class="stat-value">1,389</p>
+                            <p class="stat-value">@Model.TotalInteractions</p>
                         </div>
                         <div class="stat-icon amber">💬</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-info">
                             <p class="stat-label">المدربين الجدد</p>
-                            <p class="stat-value">0</p>
+                            <p class="stat-value">@Model.PromotedInstructors</p>
                         </div>
                         <div class="stat-icon violet">✓</div>
                     </div>
@@ -123,61 +123,29 @@
                     </div>
                     <div class="card-content">
                         <div class="sessions-grid">
-                            <div class="session-card gold">
-                                <div class="session-rank">
-                                    <span class="rank-icon">🏆</span>
-                                    <span class="rank-number">#1</span>
-                                </div>
-                                <h4 class="session-title">الذكاء الاصطناعي</h4>
-                                <p class="session-instructor">نورة سعد</p>
-                                <div class="session-stats">
-                                    <div class="interactions">
-                                        <span class="icon">💬</span>
-                                        <span class="count">456</span>
-                                        <span class="label">تفاعل</span>
+                            @for (int i = 0; i < Model.MostInteractedSessions.Count; i++)
+                            {
+                                var session = Model.MostInteractedSessions[i];
+                                <div class="session-card @(i == 0 ? "gold" : "")">
+                                    <div class="session-rank">
+                                        <span class="rank-icon">@((i == 0) ? "🏆" : "")</span>
+                                        <span class="rank-number">#@(i+1)</span>
                                     </div>
-                                    <div class="students">
-                                        <span class="icon">👥</span>
-                                        <span class="count">67</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="session-card">
-                                <div class="session-rank">
-                                    <span class="rank-number">#2</span>
-                                </div>
-                                <h4 class="session-title">أساسيات قواعد البيانات</h4>
-                                <p class="session-instructor">خالد عمر</p>
-                                <div class="session-stats">
-                                    <div class="interactions">
-                                        <span class="icon">💬</span>
-                                        <span class="count">312</span>
-                                        <span class="label">تفاعل</span>
-                                    </div>
-                                    <div class="students">
-                                        <span class="icon">👥</span>
-                                        <span class="count">52</span>
+                                    <h4 class="session-title">@session.Title</h4>
+                                    <p class="session-instructor">@session.HostName</p>
+                                    <div class="session-stats">
+                                        <div class="interactions">
+                                            <span class="icon">💬</span>
+                                            <span class="count">@session.InteractionsCount</span>
+                                            <span class="label">تفاعل</span>
+                                        </div>
+                                        <div class="students">
+                                            <span class="icon">👥</span>
+                                            <span class="count">@session.ParticipantsCount</span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="session-card">
-                                <div class="session-rank">
-                                    <span class="rank-number">#3</span>
-                                </div>
-                                <h4 class="session-title">مقدمة في Python</h4>
-                                <p class="session-instructor">أحمد محمد</p>
-                                <div class="session-stats">
-                                    <div class="interactions">
-                                        <span class="icon">💬</span>
-                                        <span class="count">234</span>
-                                        <span class="label">تفاعل</span>
-                                    </div>
-                                    <div class="students">
-                                        <span class="icon">👥</span>
-                                        <span class="count">45</span>
-                                    </div>
-                                </div>
-                            </div>
+                            }
                         </div>
                     </div>
                 </div>
@@ -209,66 +177,21 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="title-cell">مقدمة في Python</td>
-                                    <td>أحمد محمد</td>
-                                    <td>45</td>
-                                    <td>234</td>
-                                    <td>2024-01-15</td>
-                                    <td><span class="badge badge-success">مكتملة</span></td>
-                                    <td>
-                                        <button class="btn-icon">✏️</button>
-                                        <button class="btn-icon danger">🗑️</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="title-cell">تطوير تطبيقات الويب</td>
-                                    <td>سارة علي</td>
-                                    <td>38</td>
-                                    <td>189</td>
-                                    <td>2024-01-18</td>
-                                    <td><span class="badge badge-warning">قادمة</span></td>
-                                    <td>
-                                        <button class="btn-icon">✏️</button>
-                                        <button class="btn-icon danger">🗑️</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="title-cell">أساسيات قواعد البيانات</td>
-                                    <td>خالد عمر</td>
-                                    <td>52</td>
-                                    <td>312</td>
-                                    <td>2024-01-20</td>
-                                    <td><span class="badge badge-success">مكتملة</span></td>
-                                    <td>
-                                        <button class="btn-icon">✏️</button>
-                                        <button class="btn-icon danger">🗑️</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="title-cell">الذكاء الاصطناعي</td>
-                                    <td>نورة سعد</td>
-                                    <td>67</td>
-                                    <td>456</td>
-                                    <td>2024-01-22</td>
-                                    <td><span class="badge badge-primary">جارية</span></td>
-                                    <td>
-                                        <button class="btn-icon">✏️</button>
-                                        <button class="btn-icon danger">🗑️</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="title-cell">تطوير تطبيقات الموبايل</td>
-                                    <td>محمد فهد</td>
-                                    <td>41</td>
-                                    <td>198</td>
-                                    <td>2024-01-25</td>
-                                    <td><span class="badge badge-warning">قادمة</span></td>
-                                    <td>
-                                        <button class="btn-icon">✏️</button>
-                                        <button class="btn-icon danger">🗑️</button>
-                                    </td>
-                                </tr>
+                                @foreach (var session in Model.AllSessions)
+                                {
+                                    <tr>
+                                        <td class="title-cell">@session.Title</td>
+                                        <td>@session.HostName</td>
+                                        <td>@session.ParticipantsCount</td>
+                                        <td>@session.InteractionsCount</td>
+                                        <td>@(session.ScheduledAt.HasValue ? session.ScheduledAt.Value.ToString("yyyy-MM-dd") : "-")</td>
+                                        <td><span class="badge">@session.StatusArabic</span></td>
+                                        <td>
+                                            <button class="btn-icon">✏️</button>
+                                            <button class="btn-icon danger">🗑️</button>
+                                        </td>
+                                    </tr>
+                                }
                             </tbody>
                         </table>
                     </div>
@@ -301,44 +224,43 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @for (int i = 0; i < Model.Count; i++)
-                                {
-                                    var student = Model[i];
-                                    <tr>
-                                        <td><span class="rank-badge">@((i + 1))</span></td>
-                                        <td class="name-cell">@student.FullName</td>
-                                        <td class="points-cell">@student.Points</td>
-                                        <td>
-                                            <span class="skill-type @(student.IsTechnical ? "technical" : "non-technical")">
-                                                @(student.IsTechnical ? "💻 تقني" : "🎨 غير تقني")
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <div class="skills-list">
-                                                @foreach (var skill in student.Skills)
-                                                {
-                                                    <span class="skill-tag">@skill</span>
-                                                }
-                                            </div>
-                                        </td>
-                                        <td>@student.CompletedSessions</td>
-                                        <td>
-    @if (student.IsTechnical)
+    @for (int i = 0; i < Model.TopStudents.Count; i++)
     {
-        <a asp-controller="Admin" asp-action="ConfirmPromote" asp-route-id="@student.Id" class="btn btn-warning btn-sm">
-    ترقية كمدرب
-</a>
-
+        var student = Model.TopStudents[i];
+        <tr>
+            <td><span class="rank-badge">@((i + 1))</span></td>
+            <td class="name-cell">@student.FullName</td>
+            <td class="points-cell">@student.TotalPoints</td>
+            <td>
+                <span class="skill-type @(student.SkillType)">
+                    @(student.SkillTypeArabic)
+                </span>
+            </td>
+            <td>
+                <div class="skills-list">
+                    @foreach (var skill in student.Skills)
+                    {
+                        <span class="skill-tag">@skill</span>
+                    }
+                </div>
+            </td>
+            <td>@student.CompletedSessions</td>
+            <td>
+                @if (student.IsEligibleForPromotion)
+                {
+                    <a asp-controller="Admin" asp-action="ConfirmPromote" asp-route-id="@student.UserId" class="btn btn-warning btn-sm">
+                        ترقية كمدرب
+                    </a>
+                }
+                else
+                {
+                    <span class="text-muted">غير مؤهل</span>
+                }
+            </td>
+        </tr>
     }
-    else
-    {
-        <span class="text-muted">غير مؤهل</span>
-    }
-</td>
+</tbody>
 
-                                    </tr>
-                                }
-                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -346,7 +268,37 @@
 
             <!-- Instructors Tab Content -->
             <section id="instructors" class="tab-content">
-                <!-- Your original instructors tab content here (unchanged) -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">المدربين</h3>
+                        <p class="card-description">عرض جميع المدربين في الأكاديمية</p>
+                    </div>
+                    <div class="card-content">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>الاسم</th>
+                                    <th>البريد الإلكتروني</th>
+                                    <th>التخصص</th>
+                                    <th>عدد الجلسات</th>
+                                    <th>التقييم</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var instructor in Model.Instructors)
+                                {
+                                    <tr>
+                                        <td>@instructor.FullName</td>
+                                        <td>@instructor.Email</td>
+                                        <td>@instructor.Specialty</td>
+                                        <td>@instructor.SessionsCount</td>
+                                        <td>@instructor.Rating</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </section>
 
             <!-- Settings Tab Content -->

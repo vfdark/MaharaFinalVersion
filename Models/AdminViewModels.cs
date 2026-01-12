@@ -10,6 +10,7 @@ namespace MaharaFinalVersion.Models
         public List<SessionListViewModel> AllSessions { get; set; } = new();
         public List<StudentViewModel> TopStudents { get; set; } = new();
         public List<InstructorViewModel> Instructors { get; set; } = new();
+        
     }
 
     public class SessionStatsViewModel

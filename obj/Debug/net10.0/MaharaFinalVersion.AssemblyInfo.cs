@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MaharaFinalVersion")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+38e15ddbd7b9297ede0fce37fd5664dfd1a465b5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+66bda7e7640cd81176e5f7c5008d4fd7247f1452")]
 [assembly: System.Reflection.AssemblyProductAttribute("MaharaFinalVersion")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MaharaFinalVersion")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
