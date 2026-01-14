@@ -1,0 +1,41 @@
+@model MaharaFinalVersion.Models.Session
+
+@{
+    ViewData["Title"] = "حذف الجلسة";
+}
+
+<h2>حذف الجلسة</h2>
+
+<div class="alert alert-danger">
+    لا يمكن التراجع عن هذه العملية
+</div>
+
+<ul>
+    <li><strong>العنوان:</strong> @Model.Title</li>
+</ul>
+
+<form asp-action="DeleteSession" method="post">
+    @Html.AntiForgeryToken()
+
+    <!-- MUST match the POST parameter name -->
+    <input type="hidden" name="id" value="@Model.Id" />
+
+    <div class="form-group">
+        <label>سبب الحذف</label>
+        <textarea name="deleteReason"
+                  class="form-control"
+                  rows="4"
+                  placeholder="اكتب سبب حذف الجلسة هنا..."
+                  required></textarea>
+    </div>
+
+    <br />
+
+    <button type="submit" class="btn btn-danger">
+        حذف الجلسة
+    </button>
+
+    <a asp-action="Dashboard" class="btn btn-secondary">
+        إلغاء
+    </a>
+</form>

@@ -1,0 +1,14 @@
+@{
+    ViewData["Title"] = "تم حذف الجلسة";
+}
+
+<h2>تم حذف الجلسة بنجاح!</h2>
+
+<p>تم حذف الجلسة بعنوان: <strong>@TempData["DeletedSessionTitle"]</strong></p>
+
+@if (TempData["DeleteReason"] != null)
+{
+    <p>سبب الحذف: <strong>@TempData["DeleteReason"]</strong></p>
+}
+
+<a asp-action="Dashboard" class="btn btn-primary">العودة إلى لوحة التحكم</a>

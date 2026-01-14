@@ -18,6 +18,7 @@ namespace MaharaFinalVersion.Data
         public DbSet<StudentSession> StudentSessions { get; set; } = null!;
         public DbSet<InstructorPromotion> InstructorPromotions { get; set; } = null!;
          public DbSet<SessionInteraction> SessionInteractions { get; set; } = null!;
+         public DbSet<UserSkill> UserSkills { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

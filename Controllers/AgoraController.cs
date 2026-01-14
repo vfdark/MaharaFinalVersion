@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
-using MaharaFinalVersion.Agora; // <- for RtcTokenBuilder
+using MaharaFinalVersion.Agora;
 
 namespace MaharaFinalVersion.Controllers
 {
@@ -8,32 +8,52 @@ namespace MaharaFinalVersion.Controllers
     [Route("api/[controller]")]
     public class AgoraController : ControllerBase
     {
-        private readonly string AppId = "d0d5abfd738c42a2a956b631679d1971";
-        private readonly string AppCertificate = "77d2043fd6c84ca48608c71b2c57fca5";
+        private const string AppId = "d0d5abfd738c42a2a956b631679d1971";
+private const string AppCertificate = "77d2043fd6c84ca48608c71b2c57fca5";
 
         [HttpGet("token")]
-        public IActionResult GetToken([FromQuery] string channelName, [FromQuery] string uid = "0")
+        public IActionResult GetToken(
+            [FromQuery] string channelName,
+            [FromQuery] uint uid = 0,
+            [FromQuery] bool isHost = false)
         {
+            if (string.IsNullOrEmpty(channelName))
+                return BadRequest("Channel name is required");
+
             try
             {
-                // Token valid for 1 hour
-                int expireTimeInSeconds = 3600;
-                uint userId = Convert.ToUInt32(uid);
+                // ✅ EXPIRE TIMESTAMP (NOT duration)
+                int expireTimestamp =
+                    (int)DateTimeOffset.UtcNow.ToUnixTimeSeconds() + 3600;
 
-                string token = RtcTokenBuilder.BuildTokenWithUid(
+                var role = isHost
+                    ? RtcRole.PUBLISHER
+                    : RtcRole.SUBSCRIBER;
+
+                string token = AgoraTokenBuilder.BuildRtcToken(
                     AppId,
                     AppCertificate,
                     channelName,
-                    userId,
-                    RtcTokenBuilder.Role.RolePublisher, // or RoleSubscriber
-                    expireTimeInSeconds
+                    uid,
+                    role,
+                    expireTimestamp
                 );
 
-                return Ok(token);
+                Console.WriteLine(
+                    $"Agora token generated | channel={channelName}, uid={uid}, role={role}");
+
+                return Ok(new
+                {
+                    appId = "d0d5abfd738c42a2a956b631679d1971",
+                    channel = channelName,
+                    uid = uid,
+                    token = token
+                });
             }
             catch (Exception ex)
             {
-                return BadRequest(new { error = ex.Message });
+                Console.WriteLine("Agora token error: " + ex);
+                return StatusCode(500, "Failed to generate Agora token");
             }
         }
     }

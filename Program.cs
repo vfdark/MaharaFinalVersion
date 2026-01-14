@@ -10,7 +10,6 @@ var builder = WebApplication.CreateBuilder(args);
 // ===============================
 builder.Services.AddDbContext<Mahara2DbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-    builder.WebHost.UseUrls("http://0.0.0.0:5246"); 
 
 // ===============================
 // Identity
@@ -29,11 +28,12 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
-
+app.Urls.Add("https://localhost:7054");
+app.Urls.Add("http://localhost:5246");
 // ===============================
 // Middleware
 // ===============================
-app.UseHttpsRedirection();
+app.UseHttpsRedirection(); // must be HTTPS
 app.UseStaticFiles();
 
 app.UseRouting();
@@ -57,18 +57,13 @@ using (var scope = app.Services.CreateScope())
     var userManager = services.GetRequiredService<UserManager<User>>();
     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
-    // 1️⃣ Create Admin role if not exists
+    // Admin role
     if (!await roleManager.RoleExistsAsync("Admin"))
-    {
         await roleManager.CreateAsync(new IdentityRole("Admin"));
-    }
 
-    // 2️⃣ Admin user data
+    // Admin user
     var adminEmail = "admin@mahara.com";
-    var adminPassword = "Admin123!";
-
     var adminUser = await userManager.FindByEmailAsync(adminEmail);
-
     if (adminUser == null)
     {
         adminUser = new User
@@ -80,24 +75,11 @@ using (var scope = app.Services.CreateScope())
             IsInstructor = false,
             EmailConfirmed = true
         };
-
-        var result = await userManager.CreateAsync(adminUser, adminPassword);
-        if (result.Succeeded)
-        {
-            await userManager.AddToRoleAsync(adminUser, "Admin");
-        }
-        else
-        {
-            foreach (var error in result.Errors)
-            {
-                Console.WriteLine($"Error creating admin: {error.Description}");
-            }
-        }
+        await userManager.CreateAsync(adminUser, "Admin123!");
+        await userManager.AddToRoleAsync(adminUser, "Admin");
     }
 
-    // ===============================
-    // ✅ SEED DUMMY STUDENTS
-    // ===============================
+    // Dummy students
     async Task CreateDummyUser(string id, string fullName, string email, int points, int completedSessions, List<string> skills)
     {
         var existingUser = await userManager.FindByEmailAsync(email);
@@ -116,7 +98,7 @@ using (var scope = app.Services.CreateScope())
                 EmailConfirmed = true
             };
 
-            await userManager.CreateAsync(user, "Password123!"); // default password
+            await userManager.CreateAsync(user, "Password123!");
         }
     }
 

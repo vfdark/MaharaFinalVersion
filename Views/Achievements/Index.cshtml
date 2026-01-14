@@ -1,0 +1,193 @@
+@{
+    ViewData["Title"] = "إنجازاتي";
+    Layout = null;
+}
+
+<link rel="stylesheet" href="~/css/achievements.css" />
+
+<div class="achievements-container">
+    <!-- Header Section -->
+    <div class="achievements-header">
+        <span class="header-icon">🏆</span>
+        <h1>إنجازاتي</h1>
+        <p>تتبع تقدمك واحتفل بإنجازاتك المميزة</p>
+        
+        <div class="progress-stats">
+            <div class="progress-item">
+                <div class="progress-circle"><span>5</span></div>
+                <div class="progress-label">إنجازات مفتوحة</div>
+            </div>
+            <div class="progress-item">
+                <div class="progress-circle"><span>3</span></div>
+                <div class="progress-label">قيد التقدم</div>
+            </div>
+            <div class="progress-item">
+                <div class="progress-circle"><span>150</span></div>
+                <div class="progress-label">نقاط مكتسبة</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Category Tabs -->
+    <div class="categories-section">
+        <div class="category-tabs">
+            <button class="category-tab active">
+                <span>🎯</span> الكل <span class="category-count">8</span>
+            </button>
+            <button class="category-tab">
+                <span>🎓</span> الترقيات <span class="category-count">2</span>
+            </button>
+            <button class="category-tab">
+                <span>📚</span> الجلسات <span class="category-count">3</span>
+            </button>
+            <button class="category-tab">
+                <span>💬</span> التفاعلات <span class="category-count">3</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Achievements Grid -->
+    <div class="achievements-grid">
+        <!-- Unlocked: Promoted to Instructor -->
+        <div class="achievement-card">
+            <div class="achievement-icon gold">
+                🎓
+                <span class="unlocked-badge">✓</span>
+            </div>
+            <h3 class="achievement-title">ترقية إلى مدرب</h3>
+            <p class="achievement-description">تهانينا! لقد تمت ترقيتك من طالب إلى مدرب معتمد</p>
+            <div class="achievement-meta">
+                <span class="achievement-date">📅 2024-01-15</span>
+                <span class="achievement-points">⭐ +50 نقطة</span>
+            </div>
+        </div>
+
+        <!-- Unlocked: First Session Created -->
+        <div class="achievement-card">
+            <div class="achievement-icon purple">
+                📚
+                <span class="unlocked-badge">✓</span>
+            </div>
+            <h3 class="achievement-title">أول جلسة تدريبية</h3>
+            <p class="achievement-description">قمت بإنشاء أول جلسة تدريبية خاصة بك</p>
+            <div class="achievement-meta">
+                <span class="achievement-date">📅 2024-01-20</span>
+                <span class="achievement-points">⭐ +30 نقطة</span>
+            </div>
+        </div>
+
+        <!-- Unlocked: First Student Interaction -->
+        <div class="achievement-card">
+            <div class="achievement-icon green">
+                💬
+                <span class="unlocked-badge">✓</span>
+            </div>
+            <h3 class="achievement-title">أول تفاعل</h3>
+            <p class="achievement-description">تفاعلت لأول مرة كطالب في جلسة تدريبية</p>
+            <div class="achievement-meta">
+                <span class="achievement-date">📅 2024-01-10</span>
+                <span class="achievement-points">⭐ +10 نقطة</span>
+            </div>
+        </div>
+
+        <!-- Unlocked: First Session Completed -->
+        <div class="achievement-card">
+            <div class="achievement-icon blue">
+                ✅
+                <span class="unlocked-badge">✓</span>
+            </div>
+            <h3 class="achievement-title">إتمام أول جلسة</h3>
+            <p class="achievement-description">أكملت أول جلسة تدريبية بنجاح كمدرب</p>
+            <div class="achievement-meta">
+                <span class="achievement-date">📅 2024-01-25</span>
+                <span class="achievement-points">⭐ +40 نقطة</span>
+            </div>
+        </div>
+
+        <!-- Unlocked: First Student Enrolled -->
+        <div class="achievement-card">
+            <div class="achievement-icon pink">
+                👥
+                <span class="unlocked-badge">✓</span>
+            </div>
+            <h3 class="achievement-title">أول طالب</h3>
+            <p class="achievement-description">انضم أول طالب إلى إحدى جلساتك التدريبية</p>
+            <div class="achievement-meta">
+                <span class="achievement-date">📅 2024-01-22</span>
+                <span class="achievement-points">⭐ +20 نقطة</span>
+            </div>
+        </div>
+
+        <!-- Locked: 5 Sessions Created -->
+        <div class="achievement-card locked">
+            <div class="achievement-icon silver">
+                🏅
+                <span class="locked-badge">🔒</span>
+            </div>
+            <h3 class="achievement-title">منشئ الجلسات</h3>
+            <p class="achievement-description">قم بإنشاء 5 جلسات تدريبية</p>
+            <div class="achievement-progress">
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" style="width: 60%;"></div>
+                </div>
+                <div class="progress-text">
+                    <span>3 من 5 جلسات</span>
+                    <span>60%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Locked: 10 Students Trained -->
+        <div class="achievement-card locked">
+            <div class="achievement-icon silver">
+                👨‍🏫
+                <span class="locked-badge">🔒</span>
+            </div>
+            <h3 class="achievement-title">مدرب متميز</h3>
+            <p class="achievement-description">قم بتدريب 10 طلاب في جلساتك</p>
+            <div class="achievement-progress">
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" style="width: 40%;"></div>
+                </div>
+                <div class="progress-text">
+                    <span>4 من 10 طلاب</span>
+                    <span>40%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Locked: Promote First Student -->
+        <div class="achievement-card locked">
+            <div class="achievement-icon silver">
+                🌟
+                <span class="locked-badge">🔒</span>
+            </div>
+            <h3 class="achievement-title">صانع المدربين</h3>
+            <p class="achievement-description">ساعد طالب على الترقي ليصبح مدرباً</p>
+            <div class="achievement-progress">
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" style="width: 0%;"></div>
+                </div>
+                <div class="progress-text">
+                    <span>0 من 1 ترقية</span>
+                    <span>0%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Next Achievement Hint -->
+    <div class="next-achievement">
+        <span class="next-achievement-icon">🎯</span>
+        <div class="next-achievement-content">
+            <h4>الإنجاز التالي: منشئ الجلسات</h4>
+            <p>أنشئ جلستين إضافيتين لفتح هذا الإنجاز والحصول على 25 نقطة!</p>
+        </div>
+    </div>
+
+    <!-- Motivation Section -->
+    <div class="motivation-section">
+        <p class="motivation-text">🚀 أنت على الطريق الصحيح! استمر في التعلم والتدريب</p>
+        <p class="motivation-sub">كل إنجاز يقربك من التميز</p>
+    </div>
+</div>

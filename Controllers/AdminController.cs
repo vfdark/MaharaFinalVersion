@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MaharaFinalVersion.Models;
+using MaharaFinalVersion.Data;
 
 namespace MaharaFinalVersion.Controllers
 {
@@ -9,23 +11,22 @@ namespace MaharaFinalVersion.Controllers
     public class AdminController : Controller
     {
         private readonly UserManager<User> _userManager;
+        private readonly Mahara2DbContext _context;
 
-        public AdminController(UserManager<User> userManager)
+        public AdminController(UserManager<User> userManager, Mahara2DbContext context)
         {
             _userManager = userManager;
+            _context = context;
         }
 
         public async Task<IActionResult> Dashboard()
         {
-            // Users from database
-            var allUsers = _userManager.Users.ToList();
-
-            var students = new List<StudentViewModel>();
+            // --- Users ---
+            var allUsers = await _userManager.Users.ToListAsync();
+            var students = new List<MaharaFinalVersion.Models.StudentViewModel>();
             var instructors = new List<InstructorViewModel>();
-            int totalInteractions = 0;
             int promotedInstructors = 0;
 
-            // Process real users
             foreach (var user in allUsers)
             {
                 if (await _userManager.IsInRoleAsync(user, "Admin")) continue;
@@ -34,9 +35,9 @@ namespace MaharaFinalVersion.Controllers
                 {
                     instructors.Add(new InstructorViewModel
                     {
-                        UserId = user.Id,
-                        FullName = user.FullName,
-                        Email = user.Email,
+                        UserId = user.Id ?? "",
+                        FullName = user.FullName ?? "",
+                        Email = user.Email ?? "",
                         Specialty = string.Join(", ", user.Skills ?? new List<string>()),
                         SessionsCount = user.CompletedSessions,
                         Rating = 0,
@@ -49,11 +50,11 @@ namespace MaharaFinalVersion.Controllers
                 {
                     var skillType = (user.Skills != null && user.Skills.Any()) ? "technical" : "design";
 
-                    students.Add(new StudentViewModel
+                    students.Add(new MaharaFinalVersion.Models.StudentViewModel
                     {
-                        UserId = user.Id,
-                        FullName = user.FullName,
-                        Email = user.Email,
+                        UserId = user.Id ?? "",
+                        FullName = user.FullName ?? "",
+                        Email = user.Email ?? "",
                         TotalPoints = user.Points,
                         CompletedSessions = user.CompletedSessions,
                         Skills = user.Skills ?? new List<string>(),
@@ -64,49 +65,92 @@ namespace MaharaFinalVersion.Controllers
                 }
             }
 
-            // --- Add dummy students always ---
-            students.AddRange(new List<StudentViewModel>
+            // --- Dummy students ---
+            students.AddRange(new List<MaharaFinalVersion.Models.StudentViewModel>
             {
-                new StudentViewModel { UserId="dummy1", FullName="فاطمة الزهراء", TotalPoints=2450, CompletedSessions=24, Skills=new List<string>{"Python","ML","Data Analysis"}, SkillType="technical", IsEligibleForPromotion=true },
-                new StudentViewModel { UserId="dummy2", FullName="عبدالله العتيبي", TotalPoints=2180, CompletedSessions=22, Skills=new List<string>{"JavaScript","React","Node.js"}, SkillType="technical", IsEligibleForPromotion=true },
-                new StudentViewModel { UserId="dummy3", FullName="مريم الشمري", TotalPoints=1950, CompletedSessions=20, Skills=new List<string>{"UI/UX Design","Figma","Adobe XD"}, SkillType="design", IsEligibleForPromotion=false }
+                new MaharaFinalVersion.Models.StudentViewModel
+                {
+                    UserId = "dummy1",
+                    FullName = "فاطمة الزهراء",
+                    TotalPoints = 2450,
+                    CompletedSessions = 24,
+                    Skills = new List<string>{"Python","ML","Data Analysis"},
+                    SkillType = "technical",
+                    IsEligibleForPromotion = true
+                },
+                new MaharaFinalVersion.Models.StudentViewModel
+                {
+                    UserId = "dummy2",
+                    FullName = "عبدالله العتيبي",
+                    TotalPoints = 2180,
+                    CompletedSessions = 22,
+                    Skills = new List<string>{"JavaScript","React","Node.js"},
+                    SkillType = "technical",
+                    IsEligibleForPromotion = true
+                },
+                new MaharaFinalVersion.Models.StudentViewModel
+                {
+                    UserId = "dummy3",
+                    FullName = "مريم الشمري",
+                    TotalPoints = 1950,
+                    CompletedSessions = 20,
+                    Skills = new List<string>{"UI/UX Design","Figma","Adobe XD"},
+                    SkillType = "design",
+                    IsEligibleForPromotion = false
+                }
             });
 
-            // --- Dummy sessions and most interacted sessions ---
-            var mostInteractedSessions = new List<SessionStatsViewModel>
-            {
-                new SessionStatsViewModel { SessionId=1, Title="الذكاء الاصطناعي", HostName="نورة سعد", InteractionsCount=456, ParticipantsCount=67 },
-                new SessionStatsViewModel { SessionId=2, Title="أساسيات قواعد البيانات", HostName="خالد عمر", InteractionsCount=312, ParticipantsCount=52 },
-                new SessionStatsViewModel { SessionId=3, Title="مقدمة في Python", HostName="أحمد محمد", InteractionsCount=234, ParticipantsCount=45 }
-            };
+            // --- Fetch sessions from DB ---
+            var allSessions = await _context.Sessions
+                .Include(s => s.Creator)
+                .Include(s => s.StudentSession) // <-- match your EF property
+                .Include(s => s.Interactions)    // <-- match your EF property
+                .ToListAsync();
 
-            totalInteractions = mostInteractedSessions.Sum(s => s.InteractionsCount);
-
-            var allSessions = new List<SessionListViewModel>
+            // Map sessions to view model
+            var sessionList = allSessions.Select(s => new SessionListViewModel
             {
-                new SessionListViewModel{ SessionId=1, Title="مقدمة في Python", HostName="أحمد محمد", ParticipantsCount=45, InteractionsCount=234, ScheduledAt=new DateTime(2024,1,15), Status="ended"},
-                new SessionListViewModel{ SessionId=2, Title="تطوير تطبيقات الويب", HostName="سارة علي", ParticipantsCount=38, InteractionsCount=189, ScheduledAt=new DateTime(2024,1,18), Status="scheduled"},
-                new SessionListViewModel{ SessionId=3, Title="أساسيات قواعد البيانات", HostName="خالد عمر", ParticipantsCount=52, InteractionsCount=312, ScheduledAt=new DateTime(2024,1,20), Status="ended"},
-                new SessionListViewModel{ SessionId=4, Title="الذكاء الاصطناعي", HostName="نورة سعد", ParticipantsCount=67, InteractionsCount=456, ScheduledAt=new DateTime(2024,1,22), Status="live"},
-                new SessionListViewModel{ SessionId=5, Title="تطوير تطبيقات الموبايل", HostName="محمد فهد", ParticipantsCount=41, InteractionsCount=198, ScheduledAt=new DateTime(2024,1,25), Status="scheduled"}
-            };
+                SessionId = s.Id,
+                Title = s.Title ?? "",
+                HostName = s.Creator?.FullName ?? "Unknown",
+                ParticipantsCount = s.StudentSession?.Count ?? 0,
+                InteractionsCount = s.Interactions?.Count ?? 0,
+                ScheduledAt = s.StartTime ?? s.CreatedAt,
+                Status = s.DeletedAt != null ? "deleted" : s.IsLive ? "live" : "ended"
+            }).ToList();
+
+            int totalInteractions = sessionList.Sum(s => s.InteractionsCount);
+
+            // --- Most interacted sessions ---
+            var mostInteractedSessions = sessionList
+                .OrderByDescending(s => s.InteractionsCount)
+                .Take(3)
+                .Select(s => new SessionStatsViewModel
+                {
+                    SessionId = s.SessionId,
+                    Title = s.Title,
+                    HostName = s.HostName,
+                    ParticipantsCount = s.ParticipantsCount,
+                    InteractionsCount = s.InteractionsCount
+                }).ToList();
 
             // --- Dashboard view model ---
             var dashboardModel = new AdminDashboardViewModel
             {
-                TotalSessions = allSessions.Count,
+                TotalSessions = sessionList.Count,
                 TotalStudents = students.Count,
                 TotalInteractions = totalInteractions,
                 PromotedInstructors = promotedInstructors,
                 MostInteractedSessions = mostInteractedSessions,
-                AllSessions = allSessions,
-                TopStudents = students, // ✅ includes real + dummy students
+                AllSessions = sessionList,
+                TopStudents = students,
                 Instructors = instructors
             };
 
             return View(dashboardModel);
         }
 
+        // --- Promote Student to Instructor ---
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Promote(string id)
@@ -114,92 +158,112 @@ namespace MaharaFinalVersion.Controllers
             if (string.IsNullOrEmpty(id)) return NotFound();
 
             var user = await _userManager.FindByIdAsync(id);
-
             if (user != null)
             {
-                // Real user → just promote
                 user.IsInstructor = true;
                 await _userManager.UpdateAsync(user);
                 TempData["Success"] = $"{user.FullName} تم ترقيته إلى مدرب!";
             }
             else
             {
-                // Dummy user → create in-memory as real instructor
-                user = new User
-                {
-                    Id = id,
-                    UserName = id,
-                    FullName = id switch
-                    {
-                        "dummy1" => "فاطمة الزهراء",
-                        "dummy2" => "عبدالله العتيبي",
-                        "dummy3" => "مريم الشمري",
-                        _ => "طالب وهمي"
-                    },
-                    Email = $"{id}@example.com",
-                    IsInstructor = true,
-                    Points = id switch
-                    {
-                        "dummy1" => 2450,
-                        "dummy2" => 2180,
-                        "dummy3" => 1950,
-                        _ => 0
-                    },
-                    CompletedSessions = id switch
-                    {
-                        "dummy1" => 24,
-                        "dummy2" => 22,
-                        "dummy3" => 20,
-                        _ => 0
-                    },
-                    Skills = id switch
-                    {
-                        "dummy1" => new List<string>{ "Python","ML","Data Analysis" },
-                        "dummy2" => new List<string>{ "JavaScript","React","Node.js" },
-                        "dummy3" => new List<string>{ "UI/UX Design","Figma","Adobe XD" },
-                        _ => new List<string>()
-                    }
-                };
-
-                // Add dummy to the list immediately (in-memory)
-                TempData["Success"] = $"تم ترقيه الطالب الوهمي {user.FullName} إلى مدرب!";
+                TempData["Success"] = "تم ترقية الطالب الوهمي إلى مدرب!";
             }
 
             return RedirectToAction("Dashboard");
         }
 
-        public async Task<IActionResult> ConfirmPromote(string id)
+        // --- Edit Session ---
+      
+       [HttpGet]
+public async Task<IActionResult> EditSession(int sessionId)
+{
+    var session = await _context.Sessions
+        .Include(s => s.Creator)
+        .FirstOrDefaultAsync(s => s.Id == sessionId);
+
+    if (session == null) return NotFound();
+
+    // Map to SessionListViewModel
+    var model = new SessionListViewModel
+    {
+        SessionId = session.Id,
+        Title = session.Title,
+        HostName = session.Creator?.FullName ?? "",
+        Status = session.IsLive ? "live" : "ended"
+        // Add more properties if needed
+    };
+
+    return View(model);
+}
+
+
+
+
+
+        // --- Edit Session POST ---
+        [HttpPost]
+[ValidateAntiForgeryToken]
+public async Task<IActionResult> EditSession(SessionListViewModel model)
+{
+    if (!ModelState.IsValid) return View(model);
+
+    var session = await _context.Sessions.FindAsync(model.SessionId);
+    if (session == null) return NotFound();
+
+    session.Title = model.Title ?? "";
+    session.IsLive = model.Status == "live";
+
+    await _context.SaveChangesAsync();
+    TempData["Success"] = "تم تعديل الجلسة بنجاح!";
+
+    return RedirectToAction("Dashboard");
+}
+
+
+        // --- Delete Session GET ---
+        [HttpGet]
+public async Task<IActionResult> DeleteSession(int id)
+{
+    var session = await _context.Sessions.FindAsync(id);
+    if (session == null) return NotFound();
+
+    var model = new SessionListViewModel
+    {
+        SessionId = session.Id,
+        Title = session.Title ?? "",
+        Description = session.Description ?? "",
+        HostName = session.Creator?.FullName ?? "Unknown",
+        ParticipantsCount = session.StudentSession?.Count ?? 0,
+        InteractionsCount = session.Interactions?.Count ?? 0,
+        ScheduledAt = session.StartTime ?? session.CreatedAt,
+        Status = session.IsLive ? "live" : "ended"
+    };
+
+    return View(model);
+}
+
+
+        // --- Delete Session POST (hard delete) ---
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteSession(int id, string deleteReason)
         {
-            var user = await _userManager.FindByIdAsync(id);
+            var session = await _context.Sessions.FindAsync(id);
+            if (session == null) return NotFound();
 
-            AdminStudentViewModel model;
+            _context.Sessions.Remove(session);
+            await _context.SaveChangesAsync();
 
-            if (user != null)
-            {
-                model = new AdminStudentViewModel
-                {
-                    Id = user.Id,
-                    FullName = user.FullName,
-                    Points = user.Points,
-                    CompletedSessions = user.CompletedSessions,
-                    Skills = user.Skills ?? new List<string>()
-                };
-            }
-            else
-            {
-                // Dummy users
-                model = id switch
-                {
-                    "dummy1" => new AdminStudentViewModel { Id="dummy1", FullName="فاطمة الزهراء", Points=2450, CompletedSessions=24, Skills=new List<string>{ "Python","ML","Data Analysis" } },
-                    "dummy2" => new AdminStudentViewModel { Id="dummy2", FullName="عبدالله العتيبي", Points=2180, CompletedSessions=22, Skills=new List<string>{ "JavaScript","React","Node.js" } },
-                    "dummy3" => new AdminStudentViewModel { Id="dummy3", FullName="مريم الشمري", Points=1950, CompletedSessions=20, Skills=new List<string>{ "UI/UX Design","Figma","Adobe XD" } },
-                    _ => null
-                };
+            // Redirect to confirmation page
+            return RedirectToAction("DeleteSessionConfirmation", new { title = session.Title, reason = deleteReason });
+        }
 
-                if (model == null) return NotFound();
-            }
-
-            return View(model);
+        // --- Delete Session Confirmation ---
+        [HttpGet]
+        public IActionResult DeleteSessionConfirmation(string title, string reason)
+        {
+            ViewData["DeletedSessionTitle"] = title;
+            ViewData["DeleteReason"] = reason;
+            return View(); // DeleteSessionConfirmation.cshtml
         }
     }
 }

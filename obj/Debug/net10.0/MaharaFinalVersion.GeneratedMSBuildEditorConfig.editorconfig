@@ -38,12 +38,28 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9SZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/rahafdev/MaharaFinalVersion/Views/Achievements/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNoaWV2ZW1lbnRzL0luZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/rahafdev/MaharaFinalVersion/Views/Admin/ConfirmPromote.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWRtaW4vQ29uZmlybVByb21vdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/rahafdev/MaharaFinalVersion/Views/Admin/Dashboard.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWRtaW4vRGFzaGJvYXJkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/rahafdev/MaharaFinalVersion/Views/Admin/DeleteSession.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWRtaW4vRGVsZXRlU2Vzc2lvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/rahafdev/MaharaFinalVersion/Views/Admin/DeleteSessionConfirmation.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWRtaW4vRGVsZXRlU2Vzc2lvbkNvbmZpcm1hdGlvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/rahafdev/MaharaFinalVersion/Views/Admin/EditSession.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWRtaW4vRWRpdFNlc3Npb24uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/rahafdev/MaharaFinalVersion/Views/Dashboard/Index.cshtml]

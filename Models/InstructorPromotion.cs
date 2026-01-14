@@ -8,5 +8,7 @@ namespace MaharaFinalVersion.Models
         public string StudentId { get; set; } = string.Empty;
         public DateTime PromotedAt { get; set; } = DateTime.Now;
         public User Student { get; set; }
+       
+
     }
 }

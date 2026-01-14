@@ -11,5 +11,6 @@ namespace MaharaFinalVersion.Models
         public List<string> Skills { get; set; } = new List<string>();
         public int CompletedSessions { get; set; }
         public bool IsInstructor { get; set; } = false;
+         public string Email { get; set; } = ""; 
     }
 }

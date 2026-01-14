@@ -178,7 +178,9 @@ namespace MaharaFinalVersion.Controllers
                 CreatorId = session.CreatorId,
                 Participants = participants,
                 Messages = messages,
-                IsHost = userId == session.CreatorId
+                IsHost = userId == session.CreatorId,
+                ChannelName = "Mahara_" + session.Id,
+                 AppId = "d0d5abfd738c42a2a956b631679d1971" // ADD THIS!
             };
 
             return View(liveSession);

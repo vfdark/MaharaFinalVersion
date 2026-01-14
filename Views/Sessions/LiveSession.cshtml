@@ -5,8 +5,6 @@
 }
 
 <link rel="stylesheet" href="~/css/live-session.css" />
-
-<!-- ✅ Agora SDK (ONLY ONCE) -->
 <script src="https://download.agora.io/sdk/release/AgoraRTC_N.js"></script>
 
 <div class="live-session-page">
@@ -18,29 +16,26 @@
 
     <main class="session-container">
 
-        <!-- 🖥️ Screen Share Area -->
+        <!-- Screen Share Area -->
         <div id="screen-share" class="screen-share-area">
             <p id="screen-placeholder">لم يتم بدء مشاركة الشاشة بعد</p>
         </div>
 
-        <!-- 👥 Participants -->
+        <!-- Participants -->
         <aside class="participants-list">
             <h2>المشاركون</h2>
             <ul id="participants">
                 @foreach (var p in Model.Participants ?? new List<MaharaFinalVersion.Models.Participant>())
                 {
                     <li class="@(p.IsSpeaking ? "speaking" : "")">
-                        @if (p.IsHost)
-                        {
-                            <span class="host-badge">المضيف</span>
-                        }
+                        @if (p.IsHost) { <span class="host-badge">المضيف</span> }
                         @p.Name
                     </li>
                 }
             </ul>
         </aside>
 
-        <!-- 💬 Chat -->
+        <!-- Chat -->
         <section class="chat-area">
             <h2>المحادثة</h2>
             <div id="messages">
@@ -55,12 +50,11 @@
 
     </main>
 
-    <!-- 🎥 Controls (Instructor Only) -->
     @if (Model.IsHost)
     {
         <div class="live-controls">
-            <button class="btn btn-primary" onclick="startScreenShare()">🖥️ مشاركة الشاشة</button>
-            <button class="btn btn-danger" onclick="stopScreenShare()">⛔ إيقاف المشاركة</button>
+            <button class="btn btn-primary" id="startBtn">🖥️ مشاركة الشاشة</button>
+            <button class="btn btn-danger" id="stopBtn" disabled>⛔ إيقاف المشاركة</button>
         </div>
     }
 
@@ -71,45 +65,134 @@
     <a href="#">سياسة الخصوصية</a>
 </footer>
 
-<!-- ========================= -->
-<!-- Agora Screen Share Logic -->
-<!-- ========================= -->
 <script>
-    const APP_ID = "d0d5abfd738c42a2a956b631679d1971";
-    const CHANNEL = "Mahara";
-    const TOKEN = "007eJxTYLDYecAtcfFvhjXb3zs9LT45VS/CfXXBkjSlbXmuO17dPsStwJBikGKamJSWYm5skWxilGiUaGlqlmRmbGhmbpliaGlu+IM1NbMhkJFBWVaNiZEBAkF8NgbfxIzEokQGBgDmzSAI";
+const APP_ID = "d0d5abfd738c42a2a956b631679d1971"; // your app ID
+const CHANNEL = "@Html.Raw(Model.ChannelName)";
+const IS_HOST = @Model.IsHost.ToString().ToLower();
+let UID = Math.floor(Math.random() * 10000);
+let TOKEN = "";
+let joined = false;
+let joining = false; // to prevent double join
+let screenTrack = null;
 
-    const client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
-    let screenTrack = null;
+// Create Agora client
+const client = AgoraRTC.createClient({ 
+    mode: "rtc", 
+    codec: "vp8",
+    enableLogUpload: false // disable stats to avoid CORS errors
+});
 
-    async function startScreenShare() {
-        try {
-            await client.join(APP_ID, CHANNEL, TOKEN, null);
-
-            screenTrack = await AgoraRTC.createScreenVideoTrack({
-                encoderConfig: "1080p"
-            });
-
-            const screenContainer = document.getElementById("screen-share");
-            screenContainer.innerHTML = "";
-            screenTrack.play(screenContainer);
-
-            await client.publish(screenTrack);
-        } catch (e) {
-            console.error(e);
-            alert("فشل بدء مشاركة الشاشة");
-        }
+// -------------------
+// Get token
+// -------------------
+async function getToken() {
+    if (TOKEN) return TOKEN;
+    try {
+        const res = await fetch(`/api/Agora/token?channelName=${CHANNEL}&uid=${UID}&isHost=${IS_HOST}`);
+        const data = await res.json();
+        TOKEN = data.token;
+        console.log("✅ Token fetched:", TOKEN);
+        return TOKEN;
+    } catch (err) {
+        console.error("❌ Failed to fetch token:", err);
+        alert("فشل الحصول على الرمز المميز: " + err.message);
     }
+}
 
-    async function stopScreenShare() {
+// -------------------
+// Join channel safely
+// -------------------
+async function joinChannel() {
+    if (joined) return;
+    if (joining) return;
+    joining = true;
+    try {
+        await getToken();
+        await client.join(APP_ID, CHANNEL, TOKEN, UID);
+        joined = true;
+        console.log("✅ Joined channel:", CHANNEL, "UID:", UID);
+    } catch (err) {
+        console.error("❌ Failed to join channel:", err);
+        alert("فشل الانضمام للقناة: " + err.message);
+    } finally {
+        joining = false;
+    }
+}
+
+// -------------------
+// Start screen share
+// -------------------
+async function startScreenShare() {
+    try {
+        if (!joined) await joinChannel();
+
         if (screenTrack) {
-            await client.unpublish(screenTrack);
-            screenTrack.stop();
-            screenTrack.close();
-            screenTrack = null;
-
-            document.getElementById("screen-share").innerHTML =
-                "<p>تم إيقاف مشاركة الشاشة</p>";
+            console.warn("Screen already sharing");
+            return;
         }
+
+        screenTrack = await AgoraRTC.createScreenVideoTrack({ encoderConfig: "1080p", optimizationMode: "motion" });
+
+        const container = document.getElementById("screen-share");
+        container.innerHTML = "";
+        screenTrack.play(container);
+
+        await client.publish(screenTrack);
+        console.log("✅ Screen share started");
+
+        document.getElementById("startBtn").disabled = true;
+        document.getElementById("stopBtn").disabled = false;
+
+    } catch (err) {
+        console.error("❌ Failed to start screen share:", err);
+        alert("فشل بدء مشاركة الشاشة: " + err.message);
     }
+}
+
+// -------------------
+// Stop screen share
+// -------------------
+async function stopScreenShare() {
+    try {
+        if (!joined) {
+            alert("لا يمكن إيقاف المشاركة لأنك لم تنضم للقناة بعد.");
+            return;
+        }
+
+        if (!screenTrack) return;
+
+        await client.unpublish(screenTrack);
+        screenTrack.stop();
+        screenTrack.close();
+        screenTrack = null;
+
+        const container = document.getElementById("screen-share");
+        container.innerHTML = "<p>لم يتم بدء مشاركة الشاشة بعد</p>";
+
+        console.log("✅ Screen share stopped");
+
+        document.getElementById("startBtn").disabled = false;
+        document.getElementById("stopBtn").disabled = true;
+
+    } catch (err) {
+        console.error("❌ Failed to stop screen share:", err);
+        alert("فشل إيقاف مشاركة الشاشة: " + err.message);
+    }
+}
+
+// -------------------
+// DOM events
+// -------------------
+document.addEventListener("DOMContentLoaded", async () => {
+    const startBtn = document.getElementById("startBtn");
+    const stopBtn = document.getElementById("stopBtn");
+
+    startBtn.disabled = false;
+    stopBtn.disabled = true;
+
+    startBtn.addEventListener("click", startScreenShare);
+    stopBtn.addEventListener("click", stopScreenShare);
+
+    if (IS_HOST) await joinChannel();
+});
 </script>

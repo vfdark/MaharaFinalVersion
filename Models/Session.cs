@@ -14,10 +14,13 @@ namespace MaharaFinalVersion.Models
         public bool IsLive { get; set; }
          public DateTime? StartTime { get; set; }
            public int? Duration { get; set; } // minutes
+           public string ? DeleteReason { get; set; }
+           public DateTime? DeletedAt { get; set; }
            
 
         public ICollection<StudentSession> StudentSession { get; set; } = new List<StudentSession>();
         public ICollection<SessionInteraction> Interactions { get; set; } = new List<SessionInteraction>();
+
 
 
 

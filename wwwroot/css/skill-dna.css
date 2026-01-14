@@ -1,151 +1,797 @@
+/* ============================================
+   🧬 SKILL DNA - Ultra Creative Purple Theme
+   ============================================ */
 
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap');
 
-/* --- Reset --- */
+/* --- CSS Variables --- */
+:root {
+  --dna-primary: #7c3aed;
+  --dna-secondary: #a855f7;
+  --dna-accent: #c084fc;
+  --dna-light: #f3e8ff;
+  --dna-lighter: #faf5ff;
+  --dna-dark: #4c1d95;
+  --dna-glow: rgba(124, 58, 237, 0.5);
+  --dna-gradient: linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #c084fc 100%);
+}
+
+/* --- Reset & Base --- */
 *,
 *::before,
 *::after {
   padding: 0;
-  margin: 0 auto;
+  margin: 0;
   box-sizing: border-box;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* --- Body --- */
 body {
-  background-color: #fff; /* White background */
-  color: #111;
+  font-family: 'Tajawal', 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #0f0a1e 0%, #1a0f2e 25%, #2d1b4e 50%, #1a0f2e 75%, #0f0a1e 100%);
   min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center; 
-  perspective: 20em;
-  font-size: 20px;
-}
-
-/* --- Container --- */
-.skill-dna-page {
-  max-width: 1200px;
-  width: 100%;
-  padding: 2rem;
-}
-
-/* --- Header --- */
-.skill-dna-header {
-  margin-bottom: 2rem;
-}
-
-.skill-dna-header h1 {
-  font-size: 1.75rem;
-  color: #7c3aed; /* purple */
-  font-weight: bold;
-}
-
-.skill-btn {
-  padding: 0.5rem 1rem;
-  background-color: #7c3aed;
+  direction: rtl;
+  overflow-x: hidden;
+  position: relative;
   color: #fff;
-  border-radius: 0.5rem;
-  text-decoration: none;
-  font-weight: 500;
-  transition: background 0.3s;
 }
 
-.skill-btn:hover {
-  background-color: #a855f7;
-}
-
-/* --- Cards --- */
-.skill-card {
-  background-color: #f9f5ff; /* light purple tint */
-  border: 1px solid #e0d7f9;
-  border-radius: 1rem;
-  padding: 1.5rem;
-  box-shadow: 0 0.5rem 1rem rgba(124, 58, 237, 0.1);
-}
-
-.skill-card h2,
-.skill-card h3 {
-  color: #7c3aed;
-  margin-bottom: 0.5rem;
-}
-
-.skill-card p,
-.skill-card span {
-  color: #111;
-}
-
-/* --- Skill dots --- */
-.skill-dots {
-  display: flex;
-  gap: 0.3rem;
-  margin-top: 0.3rem;
-}
-
-.skill-dot {
-  width: 0.75rem;
-  height: 0.75rem;
-  border-radius: 50%;
-  background-color: #e5e7eb; /* muted gray */
-  transition: background 0.3s;
-}
-
-.skill-dot.active {
-  background-color: #7c3aed; /* purple active */
-}
-
-/* --- Instructions --- */
-.skill-instructions {
-  text-align: center;
-  font-size: 0.9rem;
-  padding: 0.75rem;
-  background-color: #f3e8ff;
-  border-radius: 0.75rem;
-  color: #7c3aed;
-}
-
-/* --- Rank & Progress --- */
-.progress-bar {
-  height: 0.75rem;
-  background-color: #e5e7eb;
-  border-radius: 0.5rem;
-  overflow: hidden;
-}
-
-.progress-fill {
+/* --- Animated Starfield Background --- */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, #7c3aed, #a855f7);
-  border-radius: 0.5rem;
-  transition: width 0.5s ease;
+  background-image: 
+    radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.8), transparent),
+    radial-gradient(2px 2px at 40px 70px, rgba(168, 85, 247, 0.8), transparent),
+    radial-gradient(1px 1px at 90px 40px, rgba(255,255,255,0.6), transparent),
+    radial-gradient(2px 2px at 130px 80px, rgba(192, 132, 252, 0.8), transparent),
+    radial-gradient(1px 1px at 160px 120px, rgba(255,255,255,0.5), transparent),
+    radial-gradient(2px 2px at 200px 50px, rgba(124, 58, 237, 0.9), transparent),
+    radial-gradient(1px 1px at 250px 90px, rgba(255,255,255,0.7), transparent),
+    radial-gradient(2px 2px at 300px 150px, rgba(168, 85, 247, 0.6), transparent);
+  background-size: 350px 200px;
+  animation: starMove 60s linear infinite;
+  pointer-events: none;
+  z-index: 0;
 }
 
-/* --- Achievements --- */
-.achievement {
-  background-color: #f3e8ff;
-  color: #7c3aed;
-  padding: 0.5rem 0.75rem;
-  border-radius: 0.5rem;
-  font-weight: 500;
+@keyframes starMove {
+  from { background-position: 0 0; }
+  to { background-position: 350px 200px; }
+}
+
+/* --- Floating Orbs --- */
+body::after {
+  content: '';
+  position: fixed;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  top: -200px;
+  right: -200px;
+  z-index: 0;
+  animation: orbFloat 15s ease-in-out infinite;
+}
+
+@keyframes orbFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-50px, 50px) scale(1.2); }
+}
+
+/* --- Main Container --- */
+.skill-dna-page {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* Extra floating elements */
+.skill-dna-page::before {
+  content: '';
+  position: fixed;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+  bottom: -150px;
+  left: -150px;
+  animation: orbFloat 12s ease-in-out infinite reverse;
+  pointer-events: none;
+}
+
+/* --- Header Section --- */
+.skill-dna-header {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.2) 0%, rgba(168, 85, 247, 0.15) 100%);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  border-radius: 2rem;
+  padding: 2rem 3rem;
+  margin-bottom: 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 
+    0 25px 80px rgba(124, 58, 237, 0.25),
+    0 0 100px rgba(168, 85, 247, 0.1),
+    inset 0 0 60px rgba(124, 58, 237, 0.05);
+  position: relative;
+  overflow: hidden;
+  animation: headerSlide 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes headerSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-50px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Header glow effect */
+.skill-dna-header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 100%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent 30%, rgba(168, 85, 247, 0.15) 50%, transparent 70%);
+  animation: headerShimmer 4s ease-in-out infinite;
+}
+
+@keyframes headerShimmer {
+  0% { transform: translateX(-100%) rotate(45deg); }
+  100% { transform: translateX(200%) rotate(45deg); }
+}
+
+/* DNA Emoji Animation */
+.skill-dna-header h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  text-shadow: 0 0 30px rgba(168, 85, 247, 0.5);
+  position: relative;
+  z-index: 1;
+}
+
+.skill-dna-header h1::before {
+  content: '🧬';
+  font-size: 3rem;
+  animation: dnaEmoji 3s ease-in-out infinite;
+  filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.8));
+}
+
+@keyframes dnaEmoji {
+  0%, 100% { 
+    transform: rotate(0deg) scale(1); 
+    filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.8));
+  }
+  25% { 
+    transform: rotate(-10deg) scale(1.1); 
+    filter: drop-shadow(0 0 30px rgba(192, 132, 252, 1));
+  }
+  50% { 
+    transform: rotate(0deg) scale(1); 
+    filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.8));
+  }
+  75% { 
+    transform: rotate(10deg) scale(1.1); 
+    filter: drop-shadow(0 0 30px rgba(124, 58, 237, 1));
+  }
+}
+
+/* Back Button */
+.skill-btn {
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  color: #fff;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1rem;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 2px solid rgba(168, 85, 247, 0.4);
+  backdrop-filter: blur(10px);
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  overflow: hidden;
 }
 
-/* --- DNA Animation --- */
+.skill-btn::before {
+  content: '🏠';
+  transition: transform 0.3s ease;
+}
+
+.skill-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(168, 85, 247, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.skill-btn:hover {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.3) 0%, rgba(124, 58, 237, 0.3) 100%);
+  border-color: var(--dna-secondary);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 
+    0 15px 40px rgba(168, 85, 247, 0.4),
+    0 0 30px rgba(168, 85, 247, 0.2);
+}
+
+.skill-btn:hover::before {
+  transform: rotate(15deg);
+}
+
+.skill-btn:hover::after {
+  left: 100%;
+}
+
+/* --- Main Grid --- */
+.skill-dna-content {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+/* --- Glass Card Base --- */
+.profile-card,
+.rank-card,
+.achievements-card,
+.dna-card,
+.cta-card {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(168, 85, 247, 0.2);
+  border-radius: 2rem;
+  box-shadow: 
+    0 25px 80px rgba(0, 0, 0, 0.3),
+    0 0 60px rgba(124, 58, 237, 0.1),
+    inset 0 0 80px rgba(168, 85, 247, 0.03);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+
+.profile-card:hover,
+.rank-card:hover,
+.achievements-card:hover,
+.dna-card:hover {
+  border-color: rgba(168, 85, 247, 0.4);
+  box-shadow: 
+    0 35px 100px rgba(0, 0, 0, 0.4),
+    0 0 80px rgba(124, 58, 237, 0.15),
+    inset 0 0 100px rgba(168, 85, 247, 0.05);
+  transform: translateY(-5px);
+}
+
+/* --- Profile Card --- */
+.profile-card {
+  padding: 2.5rem;
+  animation: cardReveal 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.2s both;
+}
+
+@keyframes cardReveal {
+  from {
+    opacity: 0;
+    transform: translateX(50px) rotateY(-10deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) rotateY(0);
+  }
+}
+
+/* Gradient border effect */
+.profile-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--dna-gradient);
+  border-radius: 2rem 2rem 0 0;
+}
+
+/* Sparkle decoration */
+.profile-card::after {
+  content: '✨';
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  font-size: 1.8rem;
+  animation: sparkleFloat 3s ease-in-out infinite;
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+}
+
+@keyframes sparkleFloat {
+  0%, 100% { 
+    transform: translateY(0) rotate(0deg); 
+    opacity: 0.7;
+  }
+  50% { 
+    transform: translateY(-10px) rotate(180deg); 
+    opacity: 1;
+  }
+}
+
+.profile-card h2 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #fff 0%, #c084fc 50%, #a855f7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  animation: textGlow 3s ease-in-out infinite;
+}
+
+@keyframes textGlow {
+  0%, 100% { filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.5)); }
+  50% { filter: drop-shadow(0 0 40px rgba(192, 132, 252, 0.8)); }
+}
+
+.profile-card h2::before {
+  content: '👤';
+  -webkit-text-fill-color: initial;
+  font-size: 2rem;
+  filter: drop-shadow(0 0 15px rgba(168, 85, 247, 0.5));
+}
+
+.profile-card > p {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.2) 0%, rgba(124, 58, 237, 0.1) 100%);
+  border-radius: 50px;
+  border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+.profile-card > p::before {
+  content: '⭐';
+  font-size: 1.3rem;
+  animation: starPulse 2s ease-in-out infinite;
+}
+
+@keyframes starPulse {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.2) rotate(180deg); }
+}
+
+.profile-card h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--dna-accent);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-shadow: 0 0 20px rgba(192, 132, 252, 0.5);
+}
+
+.profile-card h3::before {
+  content: '🎯';
+  filter: drop-shadow(0 0 10px rgba(192, 132, 252, 0.5));
+}
+
+/* --- Skill Items --- */
+.skill-item {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(168, 85, 247, 0.05) 100%);
+  border: 1px solid rgba(168, 85, 247, 0.2);
+  border-radius: 1.25rem;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+}
+
+.skill-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(168, 85, 247, 0.2), transparent);
+  transition: left 0.6s ease;
+}
+
+.skill-item:hover {
+  transform: translateX(-10px) scale(1.02);
+  border-color: var(--dna-secondary);
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.2) 0%, rgba(168, 85, 247, 0.1) 100%);
+  box-shadow: 
+    0 15px 40px rgba(124, 58, 237, 0.3),
+    0 0 30px rgba(168, 85, 247, 0.15),
+    inset 0 0 30px rgba(168, 85, 247, 0.05);
+}
+
+.skill-item:hover::before {
+  left: 100%;
+}
+
+.skill-item span {
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: #fff;
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+}
+
+/* --- Skill Dots --- */
+.skill-dots {
+  display: flex;
+  gap: 0.5rem;
+  direction: ltr;
+}
+
+.skill-dot {
+  width: 1.1rem;
+  height: 1.1rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(168, 85, 247, 0.3);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+}
+
+.skill-dot.active {
+  background: var(--dna-gradient);
+  border-color: var(--dna-secondary);
+  box-shadow: 
+    0 0 20px var(--dna-glow),
+    0 0 40px rgba(168, 85, 247, 0.3);
+  animation: dotGlow 2s ease-in-out infinite;
+}
+
+@keyframes dotGlow {
+  0%, 100% { 
+    transform: scale(1); 
+    box-shadow: 0 0 15px var(--dna-glow), 0 0 30px rgba(168, 85, 247, 0.2);
+  }
+  50% { 
+    transform: scale(1.2); 
+    box-shadow: 0 0 25px var(--dna-glow), 0 0 50px rgba(168, 85, 247, 0.4);
+  }
+}
+
+.skill-dot.active::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 5px;
+  height: 5px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #fff;
+}
+
+/* --- Instructions Box --- */
+.skill-instructions {
+  text-align: center;
+  font-size: 1.05rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.15) 0%, rgba(192, 132, 252, 0.1) 100%);
+  border-radius: 1.25rem;
+  color: var(--dna-accent);
+  margin-top: 2rem;
+  border: 2px dashed rgba(168, 85, 247, 0.4);
+  font-weight: 500;
+  position: relative;
+}
+
+.skill-instructions::before {
+  content: '💡';
+  position: absolute;
+  top: -18px;
+  right: 50%;
+  transform: translateX(50%);
+  background: linear-gradient(135deg, #1a0f2e 0%, #2d1b4e 100%);
+  padding: 0.3rem 0.6rem;
+  border-radius: 50%;
+  font-size: 1.6rem;
+  border: 2px solid rgba(168, 85, 247, 0.4);
+}
+
+/* --- Sidebar --- */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* --- Rank Card --- */
+.rank-card {
+  padding: 2rem;
+  text-align: center;
+  animation: cardReveal 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.3s both;
+}
+
+.rank-card h3 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--dna-accent);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-shadow: 0 0 20px rgba(192, 132, 252, 0.5);
+}
+
+.rank-card h3::before {
+  content: '🏆';
+  filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+}
+
+.rank-badge {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 1.5rem;
+  background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 50%, #f59e0b 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #1a0f2e;
+  box-shadow: 
+    0 0 60px rgba(245, 158, 11, 0.5),
+    0 0 100px rgba(251, 191, 36, 0.3),
+    0 0 0 8px rgba(245, 158, 11, 0.2),
+    0 0 0 16px rgba(245, 158, 11, 0.1),
+    inset 0 -5px 20px rgba(0, 0, 0, 0.2);
+  animation: rankFloat 4s ease-in-out infinite, rankGlow 2s ease-in-out infinite;
+  position: relative;
+}
+
+@keyframes rankFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-15px) rotate(3deg); }
+  75% { transform: translateY(-15px) rotate(-3deg); }
+}
+
+@keyframes rankGlow {
+  0%, 100% { box-shadow: 0 0 60px rgba(245, 158, 11, 0.5), 0 0 100px rgba(251, 191, 36, 0.3), 0 0 0 8px rgba(245, 158, 11, 0.2), 0 0 0 16px rgba(245, 158, 11, 0.1), inset 0 -5px 20px rgba(0, 0, 0, 0.2); }
+  50% { box-shadow: 0 0 80px rgba(245, 158, 11, 0.7), 0 0 120px rgba(251, 191, 36, 0.5), 0 0 0 10px rgba(245, 158, 11, 0.3), 0 0 0 20px rgba(245, 158, 11, 0.15), inset 0 -5px 20px rgba(0, 0, 0, 0.2); }
+}
+
+.rank-badge::before {
+  content: '👑';
+  position: absolute;
+  top: -30px;
+  font-size: 2rem;
+  filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.8));
+  animation: crownBob 2s ease-in-out infinite;
+}
+
+@keyframes crownBob {
+  0%, 100% { transform: translateY(0) rotate(-5deg); }
+  50% { transform: translateY(-8px) rotate(5deg); }
+}
+
+/* --- Progress Bar --- */
+.progress-bar {
+  height: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 1.25rem 0 0.75rem;
+  position: relative;
+  border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+.progress-bar > div,
+.progress-fill {
+  height: 100%;
+  background: var(--dna-gradient);
+  border-radius: 10px;
+  transition: width 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  box-shadow: 0 0 20px var(--dna-glow);
+}
+
+.progress-bar > div::before,
+.progress-fill::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%);
+  animation: progressShine 2s ease-in-out infinite;
+}
+
+@keyframes progressShine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+.progress-bar > div::after,
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 15px #fff, 0 0 30px #fff;
+}
+
+.rank-card small {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* --- Achievements Card --- */
+.achievements-card {
+  padding: 2rem;
+  animation: cardReveal 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.4s both;
+}
+
+.achievements-card h3 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--dna-accent);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-shadow: 0 0 20px rgba(192, 132, 252, 0.5);
+}
+
+.achievements-card h3::before {
+  content: '🌟';
+  font-size: 1.5rem;
+  animation: starSpin 4s linear infinite;
+}
+
+@keyframes starSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.achievements-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.achievement,
+.achievement-item {
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.15) 0%, rgba(245, 158, 11, 0.1) 100%);
+  color: #fbbf24;
+  padding: 1rem 1.25rem;
+  border-radius: 1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  font-size: 1rem;
+}
+
+.achievement:hover,
+.achievement-item:hover {
+  transform: translateX(-8px) scale(1.02);
+  border-color: #fbbf24;
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.25) 0%, rgba(245, 158, 11, 0.2) 100%);
+  box-shadow: 0 10px 30px rgba(251, 191, 36, 0.2);
+}
+
+.achievement::before,
+.achievement-item::before {
+  content: '⭐';
+  font-size: 1.3rem;
+  animation: achievementPulse 2s ease-in-out infinite;
+}
+
+@keyframes achievementPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+/* --- DNA Animation Card --- */
+.dna-card {
+  padding: 2rem;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  animation: cardReveal 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s both;
+}
+
+.dna-card h3 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--dna-accent);
+  margin-bottom: 1rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-shadow: 0 0 20px rgba(192, 132, 252, 0.5);
+}
+
+.dna-card h3::before {
+  content: '🧬';
+  font-size: 1.5rem;
+  animation: dnaEmoji 3s ease-in-out infinite;
+}
+
+/* --- 3D DNA Helix --- */
+.dna-container,
+.dna-helix {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1000px;
+  padding: 1rem 0;
+}
+
 .dna {
   position: relative;
-  transform: rotate(15deg);
   transform-style: preserve-3d;
-  margin: 2rem auto;
+  animation: dnaMainRotate 25s linear infinite;
 }
 
-/* Links in DNA */
-.link {
-  margin: 1em auto;
-  width: 10em;
-  height: 1em;
+@keyframes dnaMainRotate {
+  from { transform: rotateY(0deg) rotateX(5deg); }
+  to { transform: rotateY(360deg) rotateX(5deg); }
+}
+
+.dna-strand {
+  position: relative;
   transform-style: preserve-3d;
-  animation: linkY 15s infinite linear;
-  animation-delay: var(--iad);
+}
+
+.link {
+  margin: 0.5em auto;
+  width: 5em;
+  height: 0.5em;
+  transform-style: preserve-3d;
+  animation: linkY 10s infinite linear;
+  position: relative;
 }
 
 .link > div {
@@ -154,160 +800,305 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  opacity: 0.5;
-  background-image: radial-gradient(#fff, #fff0),
-    linear-gradient(90deg, #a855f7, #7c3aed);
-  box-shadow: 0 0 0.5em #7c3aed66;
-  animation: linkX 7.5s infinite linear reverse;
+  background: linear-gradient(90deg, var(--dna-primary), var(--dna-secondary), var(--dna-accent));
+  border-radius: 10px;
+  opacity: 0.8;
+  animation: linkX 5s infinite linear reverse;
+  box-shadow: 
+    0 0 20px var(--dna-glow),
+    0 0 40px rgba(168, 85, 247, 0.3);
 }
 
-/* DNA pseudo elements */
 .link::before,
 .link::after {
   content: '';
   position: absolute;
-  top: -0.5em;
-  width: 2em;
-  height: 2em;
+  top: -0.35em;
+  width: 1.2em;
+  height: 1.2em;
   border-radius: 50%;
-  animation: linkY 15s infinite linear reverse;
+  animation: linkY 10s infinite linear reverse;
 }
 
 .link::before {
-  left: -1.75em;
-  box-shadow: 0 0 1em #a855f7;
-  background-image: radial-gradient(circle at 50% 25%, #fff, #a855f7, #fff0 90%);
+  left: -0.85em;
+  background: radial-gradient(circle at 30% 30%, #fff, var(--dna-secondary), var(--dna-primary));
+  box-shadow: 
+    0 0 25px var(--dna-secondary), 
+    0 0 50px rgba(168, 85, 247, 0.4),
+    inset 0 0 15px rgba(255, 255, 255, 0.5);
 }
 
 .link::after {
-  right: -1.75em;
-  box-shadow: 0 0 1em #7c3aed;
-  background-image: radial-gradient(circle at 50% 25%, #fff, #7c3aed, #fff0 90%);
+  right: -0.85em;
+  background: radial-gradient(circle at 30% 30%, #fff, var(--dna-accent), var(--dna-secondary));
+  box-shadow: 
+    0 0 25px var(--dna-primary), 
+    0 0 50px rgba(124, 58, 237, 0.4),
+    inset 0 0 15px rgba(255, 255, 255, 0.5);
 }
 
-/* Animations */
 @keyframes linkY {
-  0% {
-    transform: rotateY(0deg);
-  }
-  100% {
-    transform: rotateY(360deg);
-  }
+  from { transform: rotateY(0deg); }
+  to { transform: rotateY(360deg); }
 }
 
 @keyframes linkX {
-  0% {
-    transform: rotateX(0deg);
-  }
-  100% {
-    transform: rotateX(360deg);
-  }
-  
-}
-.orbit-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  margin: 3rem 0;
-  position: relative;
+  from { transform: rotateX(0deg); }
+  to { transform: rotateX(360deg); }
 }
 
-.orbit {
-  width: 40em;
-  height: 40em;
-  position: relative;
+/* Staggered delays for DNA links */
+.link:nth-child(1) { animation-delay: 0s; }
+.link:nth-child(2) { animation-delay: -0.4s; }
+.link:nth-child(3) { animation-delay: -0.8s; }
+.link:nth-child(4) { animation-delay: -1.2s; }
+.link:nth-child(5) { animation-delay: -1.6s; }
+.link:nth-child(6) { animation-delay: -2s; }
+.link:nth-child(7) { animation-delay: -2.4s; }
+.link:nth-child(8) { animation-delay: -2.8s; }
+.link:nth-child(9) { animation-delay: -3.2s; }
+.link:nth-child(10) { animation-delay: -3.6s; }
+.link:nth-child(11) { animation-delay: -4s; }
+.link:nth-child(12) { animation-delay: -4.4s; }
+.link:nth-child(13) { animation-delay: -4.8s; }
+.link:nth-child(14) { animation-delay: -5.2s; }
+.link:nth-child(15) { animation-delay: -5.6s; }
+.link:nth-child(16) { animation-delay: -6s; }
+.link:nth-child(17) { animation-delay: -6.4s; }
+.link:nth-child(18) { animation-delay: -6.8s; }
+.link:nth-child(19) { animation-delay: -7.2s; }
+.link:nth-child(20) { animation-delay: -7.6s; }
+.link:nth-child(21) { animation-delay: -8s; }
+.link:nth-child(22) { animation-delay: -8.4s; }
+.link:nth-child(23) { animation-delay: -8.8s; }
+.link:nth-child(24) { animation-delay: -9.2s; }
+
+/* DNA strand nodes */
+.dna-node-top,
+.dna-node-bottom {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
 }
 
-.orbit-wrap {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  height: 100%;
-  width: 100%;
-  position: relative;
+.dna-node-top {
+  background: radial-gradient(circle at 30% 30%, #fff, var(--dna-secondary));
+  box-shadow: 0 0 15px var(--dna-secondary);
 }
 
-.orbit-wrap > li {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.dna-node-bottom {
+  background: radial-gradient(circle at 30% 30%, #fff, var(--dna-accent));
+  box-shadow: 0 0 15px var(--dna-accent);
 }
 
-/* Center Icon */
-.orbit-center {
-  z-index: 5;
-  font-size: 2em;
-  width: 3em;
-  height: 3em;
-  line-height: 3em;
+/* --- CTA Card --- */
+.cta-card {
+  padding: 2rem;
+  background: var(--dna-gradient);
   text-align: center;
-  background: #7c3aed; /* Purple */
-  color: white;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 0 15px rgba(124, 58, 237, 0.4);
-}
-
-.orbit-center__icon {
-  transition: all 0.3s ease-in-out;
-}
-
-/* Orbit Icons */
-.orbit-icon {
-  width: 2em;
-  height: 2em;
-  line-height: 2em;
-  border-radius: 50%;
-  background: #a855f7;
-  color: #fff;
-  text-align: center;
-  display: block;
-  box-shadow: 0 0 8px rgba(168, 85, 247, 0.6);
-}
-
-/* Rings */
-ul[class^="ring"] {
+  animation: cardReveal 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.6s both;
   position: relative;
-  list-style: none;
-  border-radius: 50%;
-  padding: 0;
-  margin: 0;
-  border: solid 1px rgba(124, 58, 237, 0.3);
+  overflow: hidden;
+  border: none;
 }
 
-ul[class^="ring"] li {
+.cta-card::before {
+  content: '';
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 2em;
-  height: 2em;
-  margin: -1em;
+  top: -100%;
+  left: -100%;
+  width: 300%;
+  height: 300%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+  animation: ctaOrbit 8s linear infinite;
 }
 
-/* Animations */
-.ring-0 { width: 25em; height: 25em; animation: clockwiseRotate 35s linear infinite; }
-.ring-0 i { animation: counterClockwiseRotate 35s linear infinite; }
-
-.ring-1 { width: 20em; height: 20em; animation: clockwiseRotate 30s linear infinite; }
-.ring-1 i { animation: counterClockwiseRotate 30s linear infinite; }
-
-.ring-2 { width: 15em; height: 15em; animation: clockwiseRotate 25s linear infinite; }
-.ring-2 i { animation: counterClockwiseRotate 25s linear infinite; }
-
-.ring-3 { width: 10em; height: 10em; animation: clockwiseRotate 20s linear infinite; }
-.ring-3 i { animation: counterClockwiseRotate 20s linear infinite; }
-
-@keyframes clockwiseRotate {
+@keyframes ctaOrbit {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
 
-@keyframes counterClockwiseRotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(-360deg); }
+.cta-card a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.25rem 3rem;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  color: #fff;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.15rem;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  z-index: 1;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
 }
 
+.cta-card a::before {
+  content: '🚀';
+  font-size: 1.3rem;
+  transition: transform 0.3s ease;
+}
+
+.cta-card a:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.cta-card a:hover::before {
+  transform: translateX(-5px) rotate(-15deg);
+}
+
+/* --- Orbit Container (Alternative) --- */
+.orbit-container {
+  display: none;
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 1024px) {
+  .skill-dna-content {
+    grid-template-columns: 1fr;
+  }
+  
+  .sidebar {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  
+  .dna-card {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 768px) {
+  .skill-dna-page {
+    padding: 1rem;
+  }
+  
+  .skill-dna-header {
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: center;
+    padding: 1.5rem;
+    border-radius: 1.5rem;
+  }
+  
+  .skill-dna-header h1 {
+    font-size: 1.8rem;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .sidebar {
+    grid-template-columns: 1fr;
+  }
+  
+  .dna-card {
+    grid-column: span 1;
+    min-height: 300px;
+  }
+  
+  .profile-card,
+  .rank-card,
+  .achievements-card,
+  .dna-card,
+  .cta-card {
+    padding: 1.5rem;
+    border-radius: 1.5rem;
+  }
+  
+  .link {
+    width: 3.5em;
+  }
+  
+  .link::before,
+  .link::after {
+    width: 0.9em;
+    height: 0.9em;
+  }
+  
+  .rank-badge {
+    width: 100px;
+    height: 100px;
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .skill-dna-header h1 {
+    font-size: 1.5rem;
+  }
+  
+  .skill-dna-header h1::before {
+    font-size: 2rem;
+  }
+  
+  .profile-card h2 {
+    font-size: 1.6rem;
+  }
+  
+  .skill-item {
+    flex-direction: column;
+    gap: 0.75rem;
+    text-align: center;
+  }
+  
+  .skill-dots {
+    justify-content: center;
+  }
+  
+  .rank-badge {
+    width: 80px;
+    height: 80px;
+    font-size: 1.75rem;
+  }
+  
+  .rank-badge::before {
+    font-size: 1.5rem;
+    top: -25px;
+  }
+}
+
+/* --- Accessibility --- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* --- Print Styles --- */
+@media print {
+  body {
+    background: #fff;
+    color: #000;
+  }
+  
+  body::before,
+  body::after,
+  .skill-dna-page::before,
+  .dna-card {
+    display: none;
+  }
+  
+  .skill-dna-header,
+  .profile-card,
+  .rank-card,
+  .achievements-card,
+  .cta-card {
+    box-shadow: none;
+    border: 1px solid #ddd;
+    background: #fff;
+  }
+}

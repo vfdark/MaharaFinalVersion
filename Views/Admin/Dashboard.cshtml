@@ -6,13 +6,16 @@
 
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>لوحة تحكم المشرف | أكاديمية طويق</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="~/css/admin-dashboard.css">
 </head>
+
 <body>
     <div class="admin-layout">
         <!-- Sidebar -->
@@ -26,7 +29,7 @@
                     <p>لوحة المشرف</p>
                 </div>
             </div>
-            
+
             <nav class="sidebar-nav">
                 <a href="#stats" class="nav-item active" data-tab="stats">
                     <span class="nav-icon">📊</span>
@@ -129,7 +132,7 @@
                                 <div class="session-card @(i == 0 ? "gold" : "")">
                                     <div class="session-rank">
                                         <span class="rank-icon">@((i == 0) ? "🏆" : "")</span>
-                                        <span class="rank-number">#@(i+1)</span>
+                                        <span class="rank-number">#@(i + 1)</span>
                                     </div>
                                     <h4 class="session-title">@session.Title</h4>
                                     <p class="session-instructor">@session.HostName</p>
@@ -179,18 +182,45 @@
                             <tbody>
                                 @foreach (var session in Model.AllSessions)
                                 {
-                                    <tr>
-                                        <td class="title-cell">@session.Title</td>
-                                        <td>@session.HostName</td>
-                                        <td>@session.ParticipantsCount</td>
-                                        <td>@session.InteractionsCount</td>
-                                        <td>@(session.ScheduledAt.HasValue ? session.ScheduledAt.Value.ToString("yyyy-MM-dd") : "-")</td>
-                                        <td><span class="badge">@session.StatusArabic</span></td>
-                                        <td>
-                                            <button class="btn-icon">✏️</button>
-                                            <button class="btn-icon danger">🗑️</button>
-                                        </td>
-                                    </tr>
+                                   <tr>
+    <td class="title-cell">@session.Title</td>
+    <td>@session.HostName</td>
+    <td>@session.ParticipantsCount</td>
+    <td>@session.InteractionsCount</td>
+    <td>
+        @(session.ScheduledAt.HasValue
+            ? session.ScheduledAt.Value.ToString("yyyy-MM-dd")
+            : "-")
+    </td>
+    <td>
+        <span class="badge">@session.StatusArabic</span>
+    </td>
+
+    <!-- ✅ الإجراءات داخل td -->
+    <td class="actions-cell">
+    <div class="actions">
+        <a asp-controller="Admin"
+           asp-action="EditSession"
+           asp-route-sessionId="@session.SessionId"
+           class="btn-icon"
+           title="تعديل">
+            ✏️
+        </a>
+
+        <form asp-controller="Admin"
+      asp-action="DeleteSession"
+      method="post"
+      style="display:inline">
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="id" value="@session.SessionId" />
+    <input type="hidden" name="deleteReason" value="تم الحذف من لوحة المشرف" />
+    <button type="submit" class="btn-icon danger" title="حذف">🗑️</button>
+</form>
+
+    </div>
+</td>
+</tr>
+
                                 }
                             </tbody>
                         </table>
@@ -224,42 +254,43 @@
                                 </tr>
                             </thead>
                             <tbody>
-    @for (int i = 0; i < Model.TopStudents.Count; i++)
-    {
-        var student = Model.TopStudents[i];
-        <tr>
-            <td><span class="rank-badge">@((i + 1))</span></td>
-            <td class="name-cell">@student.FullName</td>
-            <td class="points-cell">@student.TotalPoints</td>
-            <td>
-                <span class="skill-type @(student.SkillType)">
-                    @(student.SkillTypeArabic)
-                </span>
-            </td>
-            <td>
-                <div class="skills-list">
-                    @foreach (var skill in student.Skills)
-                    {
-                        <span class="skill-tag">@skill</span>
-                    }
-                </div>
-            </td>
-            <td>@student.CompletedSessions</td>
-            <td>
-                @if (student.IsEligibleForPromotion)
-                {
-                    <a asp-controller="Admin" asp-action="ConfirmPromote" asp-route-id="@student.UserId" class="btn btn-warning btn-sm">
-                        ترقية كمدرب
-                    </a>
-                }
-                else
-                {
-                    <span class="text-muted">غير مؤهل</span>
-                }
-            </td>
-        </tr>
-    }
-</tbody>
+                                @for (int i = 0; i < Model.TopStudents.Count; i++)
+                                {
+                                    var student = Model.TopStudents[i];
+                                    <tr>
+                                        <td><span class="rank-badge">@((i + 1))</span></td>
+                                        <td class="name-cell">@student.FullName</td>
+                                        <td class="points-cell">@student.TotalPoints</td>
+                                        <td>
+                                            <span class="skill-type @(student.SkillType)">
+                                                @(student.SkillTypeArabic)
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <div class="skills-list">
+                                                @foreach (var skill in student.Skills)
+                                                {
+                                                    <span class="skill-tag">@skill</span>
+                                                }
+                                            </div>
+                                        </td>
+                                        <td>@student.CompletedSessions</td>
+                                        <td>
+                                            @if (student.IsEligibleForPromotion)
+                                            {
+                                                <a asp-controller="Admin" asp-action="ConfirmPromote"
+                                                    asp-route-id="@student.UserId" class="btn btn-warning btn-sm">
+                                                    ترقية كمدرب
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted">غير مؤهل</span>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
 
                         </table>
                     </div>
@@ -311,18 +342,18 @@
     <script>
         // Tab switching functionality
         document.querySelectorAll('.nav-item[data-tab]').forEach(item => {
-            item.addEventListener('click', function(e) {
+            item.addEventListener('click', function (e) {
                 e.preventDefault();
                 const tab = this.dataset.tab;
-                
+
                 // Update nav items
                 document.querySelectorAll('.nav-item[data-tab]').forEach(nav => nav.classList.remove('active'));
                 this.classList.add('active');
-                
+
                 // Update tab content
                 document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
                 document.getElementById(tab).classList.add('active');
-                
+
                 // Update header title
                 const titles = {
                     stats: { title: 'مرحباً، مشرف', subtitle: 'إدارة الجلسات والطلاب في أكاديمية طويق' },
@@ -331,11 +362,12 @@
                     instructors: { title: 'إدارة المدربين', subtitle: 'عرض وإدارة المدربين في الأكاديمية' },
                     settings: { title: 'الإعدادات', subtitle: 'إعدادات النظام والتفضيلات' }
                 };
-                
+
                 document.querySelector('.page-title').textContent = titles[tab].title;
                 document.querySelector('.page-subtitle').textContent = titles[tab].subtitle;
             });
         });
     </script>
 </body>
+
 </html>

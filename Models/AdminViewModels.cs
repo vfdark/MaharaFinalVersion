@@ -31,6 +31,7 @@ namespace MaharaFinalVersion.Models
         public int InteractionsCount { get; set; }
         public DateTime? ScheduledAt { get; set; }
         public string Status { get; set; }
+        public string Description { get; set; } = "";
 
         public string StatusArabic => Status switch
         {
