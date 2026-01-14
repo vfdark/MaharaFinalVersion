@@ -265,5 +265,28 @@ public async Task<IActionResult> DeleteSession(int id)
             ViewData["DeleteReason"] = reason;
             return View(); // DeleteSessionConfirmation.cshtml
         }
+        // GET: Admin/ConfirmPromote/{id}
+[HttpGet]
+public async Task<IActionResult> ConfirmPromote(string id)
+{
+    if (string.IsNullOrEmpty(id))
+        return NotFound();
+
+    var user = await _userManager.FindByIdAsync(id);
+    if (user == null)
+        return NotFound();
+
+    var model = new AdminStudentViewModel
+    {
+        Id = user.Id,
+        FullName = user.FullName ?? "",
+        Points = user.Points,
+        CompletedSessions = user.CompletedSessions,
+        Skills = user.Skills ?? new List<string>()
+    };
+
+    return View(model); // ✅ matches your view
+}
+
     }
 }
