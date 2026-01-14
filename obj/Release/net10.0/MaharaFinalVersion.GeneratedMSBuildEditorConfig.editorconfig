@@ -1,0 +1,131 @@
+is_global = true
+build_property.TargetFramework = net10.0
+build_property.TargetFramework = net10.0
+build_property.TargetPlatformMinVersion = 
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.TargetFrameworkIdentifier = .NETCoreApp
+build_property.TargetFrameworkVersion = v10.0
+build_property.RootNamespace = MaharaFinalVersion
+build_property.RootNamespace = MaharaFinalVersion
+build_property.ProjectDir = /Users/rahafdev/MaharaFinalVersion/
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 9.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = /Users/rahafdev/MaharaFinalVersion
+build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 10.0
+build_property.EnableCodeStyleSeverity = 
+
+[/Users/rahafdev/MaharaFinalVersion/Views/Account/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9Mb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/rahafdev/MaharaFinalVersion/Views/Account/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9SZWdpc3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/rahafdev/MaharaFinalVersion/Views/Achievements/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNoaWV2ZW1lbnRzL0luZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/rahafdev/MaharaFinalVersion/Views/Admin/ConfirmPromote.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWRtaW4vQ29uZmlybVByb21vdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/rahafdev/MaharaFinalVersion/Views/Admin/Dashboard.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWRtaW4vRGFzaGJvYXJkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/rahafdev/MaharaFinalVersion/Views/Admin/DeleteSession.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWRtaW4vRGVsZXRlU2Vzc2lvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/rahafdev/MaharaFinalVersion/Views/Admin/DeleteSessionConfirmation.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWRtaW4vRGVsZXRlU2Vzc2lvbkNvbmZpcm1hdGlvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/rahafdev/MaharaFinalVersion/Views/Admin/EditSession.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWRtaW4vRWRpdFNlc3Npb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/rahafdev/MaharaFinalVersion/Views/Dashboard/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGFzaGJvYXJkL0luZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/rahafdev/MaharaFinalVersion/Views/Dashboard/SkillDNA.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGFzaGJvYXJkL1NraWxsRE5BLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/rahafdev/MaharaFinalVersion/Views/Dashboard/Skills.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGFzaGJvYXJkL1NraWxscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/rahafdev/MaharaFinalVersion/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9JbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/rahafdev/MaharaFinalVersion/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9Qcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/rahafdev/MaharaFinalVersion/Views/Sessions/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2Vzc2lvbnMvQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/rahafdev/MaharaFinalVersion/Views/Sessions/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2Vzc2lvbnMvRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/rahafdev/MaharaFinalVersion/Views/Sessions/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2Vzc2lvbnMvRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/rahafdev/MaharaFinalVersion/Views/Sessions/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2Vzc2lvbnMvRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/rahafdev/MaharaFinalVersion/Views/Sessions/Explore.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2Vzc2lvbnMvRXhwbG9yZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/rahafdev/MaharaFinalVersion/Views/Sessions/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2Vzc2lvbnMvSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/rahafdev/MaharaFinalVersion/Views/Sessions/LiveSession.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2Vzc2lvbnMvTGl2ZVNlc3Npb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/rahafdev/MaharaFinalVersion/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL0Vycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/rahafdev/MaharaFinalVersion/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/rahafdev/MaharaFinalVersion/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/rahafdev/MaharaFinalVersion/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/rahafdev/MaharaFinalVersion/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-gag4nsdze0

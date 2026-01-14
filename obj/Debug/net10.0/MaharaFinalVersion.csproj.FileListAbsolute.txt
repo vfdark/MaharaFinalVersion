@@ -222,7 +222,6 @@
 /Users/rahafdev/MaharaFinalVersion/obj/Debug/net10.0/compressed/dglktv7mtg-{0}-iw7uuds43m-iw7uuds43m.gz
 /Users/rahafdev/MaharaFinalVersion/obj/Debug/net10.0/compressed/y66jahdsy7-{0}-mjx04c179t-mjx04c179t.gz
 /Users/rahafdev/MaharaFinalVersion/obj/Debug/net10.0/compressed/tdfnvwyaoo-{0}-jcl3gpljyd-jcl3gpljyd.gz
-/Users/rahafdev/MaharaFinalVersion/obj/Debug/net10.0/compressed/zr8xj6l7zq-{0}-5y7uxb6d0w-5y7uxb6d0w.gz
 /Users/rahafdev/MaharaFinalVersion/obj/Debug/net10.0/compressed/3q0i0bgryb-{0}-vdmhs2ie8z-vdmhs2ie8z.gz
 /Users/rahafdev/MaharaFinalVersion/obj/Debug/net10.0/compressed/ok7sih8opz-{0}-61n19gt1b8-61n19gt1b8.gz
 /Users/rahafdev/MaharaFinalVersion/obj/Debug/net10.0/compressed/bnljc92vq3-{0}-5886ld628c-5886ld628c.gz
@@ -301,3 +300,4 @@
 /Users/rahafdev/MaharaFinalVersion/obj/Debug/net10.0/MaharaFinalVersion.pdb
 /Users/rahafdev/MaharaFinalVersion/obj/Debug/net10.0/MaharaFinalVersion.genruntimeconfig.cache
 /Users/rahafdev/MaharaFinalVersion/obj/Debug/net10.0/ref/MaharaFinalVersion.dll
+/Users/rahafdev/MaharaFinalVersion/obj/Debug/net10.0/compressed/zr8xj6l7zq-{0}-up8g3xn5f8-up8g3xn5f8.gz

@@ -1,0 +1,50 @@
+.sessions-page {
+    padding: 30px;
+}
+
+.sessions-header h1 {
+    font-size: 26px;
+    font-weight: bold;
+}
+
+.sessions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(250px,1fr));
+    gap: 20px;
+}
+
+.session-card {
+    background: white;
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,.08);
+    transition: transform .2s;
+}
+
+.session-card:hover {
+    transform: translateY(-4px);
+}
+
+.thumb {
+    font-size: 40px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: gray;
+}
+
+.btn-primary {
+    display: block;
+    margin-top: 12px;
+    text-align: center;
+    background: #4f46e5;
+    color: white;
+    padding: 8px;
+    border-radius: 10px;
+    text-decoration: none;
+}

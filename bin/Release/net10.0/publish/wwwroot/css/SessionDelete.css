@@ -1,0 +1,134 @@
+/* Delete Session Page Styles */
+
+.delete-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, hsl(270, 50%, 98%) 0%, hsl(270, 30%, 95%) 100%);
+  padding: 100px 20px 60px;
+  direction: rtl;
+  font-family: 'Tajawal', sans-serif;
+}
+
+.container {
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: right;
+}
+
+/* Page Header */
+.page-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.page-badge {
+  display: inline-block;
+  padding: 8px 20px;
+  background: hsl(270, 60%, 95%);
+  color: hsl(270, 70%, 50%);
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  border: 1px solid hsl(270, 60%, 90%);
+}
+
+.page-title {
+  font-size: 2rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, hsl(270, 70%, 50%) 0%, hsl(280, 80%, 60%) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 20px;
+}
+
+/* Alert */
+.alert {
+  padding: 15px 20px;
+  border-radius: 12px;
+  font-size: 14px;
+  color: white;
+  background: linear-gradient(135deg, hsl(0, 70%, 55%) 0%, hsl(350, 80%, 50%) 100%);
+  margin-bottom: 20px;
+  text-align: right;
+}
+
+/* Session Card */
+.session-details-card {
+  background: white;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px hsla(270, 50%, 50%, 0.1);
+  border: 1px solid hsl(270, 30%, 92%);
+  text-align: right;
+  animation: fadeInUp 0.5s ease-out;
+}
+
+.session-details-card p {
+  font-size: 14px;
+  color: hsl(270, 20%, 30%);
+  margin-bottom: 10px;
+}
+
+.session-details-card p strong {
+  font-weight: 600;
+}
+
+/* Buttons */
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, hsl(0, 70%, 55%) 0%, hsl(350, 80%, 50%) 100%);
+  color: white;
+}
+
+.btn-danger:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px hsla(0, 70%, 55%, 0.4);
+}
+
+.btn-secondary {
+  background: hsl(270, 20%, 80%);
+  color: hsl(270, 30%, 20%);
+}
+
+.btn-secondary:hover {
+  background: hsl(270, 20%, 70%);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .action-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

@@ -285,7 +285,7 @@ public async Task<IActionResult> ConfirmPromote(string id)
         Skills = user.Skills ?? new List<string>()
     };
 
-    return View(model); // ✅ matches your view
+    return View(model); 
 }
 
     }
